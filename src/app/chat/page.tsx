@@ -1,11 +1,12 @@
 'use client'
-import Image from 'next/image'
 import Auth from '@/components/Auth'
 import { useEffect, useRef, useState } from 'react'
 import "./App.css"
 
 import Cookies from 'universal-cookie'
 import Chat from '@/components/Chat'
+import {signOut} from 'firebase/auth'
+import { auth } from '../firebase'
 const cookies = new Cookies()
 
 export default function Home() {
@@ -13,6 +14,13 @@ export default function Home() {
     const [room, setRoom] = useState("")
 
     const roomInputRef = useRef(null)
+
+    const signUserOut = async () => {
+        await signOut(auth)
+        cookies.remove("auth-token")
+        setIsAuth(false)
+        setRoom("")
+    }
     //Mengatasi hydration
     const [isClient, setIsClient] = useState(false)
 
@@ -27,9 +35,9 @@ export default function Home() {
             )
         } else {
             return (
-                <div>
+                <>
                     {room ? (
-                        <Chat />
+                        <Chat room={room} />
                     ) : (
                         <div className='room'>
                             <label>Enter Room Name : </label>
@@ -37,7 +45,10 @@ export default function Home() {
                             <button onClick={() => setRoom(roomInputRef.current.value)}> Enter Chat</button>
                         </div>
                     )}
-                </div>
+                    <div className='sign-out'>
+                        <button onClick={signUserOut}>Sign Out</button>
+                    </div>
+                </>
             )
         }
     } else {
