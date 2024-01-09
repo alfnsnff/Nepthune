@@ -1,16 +1,35 @@
 'use client';
 
-import { signOut, useSession } from 'next-auth/react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
+import {auth} from '../../lib/firebase-config'
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import Image from 'next/image';
 import Link from 'next/link';
-
 import menuData from './menuData';
 
 const Header = () => {
-  const { data: session } = useSession();
+  const router = useRouter();
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user:any) => {
+      setUser(user);
+    });
+  }, []);
+
+  // signout
+  const handleLogout = () => {               
+    signOut(auth).then(() => {
+    // Sign-out successful.
+        router.push("/");
+        console.log("Signed out successfully")
+    }).catch((error) => {
+      // error happened
+      console.log(error);
+    });
+}
 
   const pathUrl = usePathname();
   // Navbar toggle
@@ -112,45 +131,46 @@ const Header = () => {
                 </nav>
               </div>
               <div className="hidden items-center justify-end pr-16 sm:flex lg:pr-0">
-                {session?.user ? (
+              {user ? (
                   <>
-                    <p className={`loginBtn px-7 py-3 text-base font-medium ${!sticky && pathUrl === '/' ? 'text-white' : 'text-dark'}`}>{session?.user?.name}</p>
+                    <p className={`loginBtn px-7 py-3 text-base font-medium ${!sticky && pathUrl === '/' ? 'text-dark' : 'text-dark'}`}>{auth.currentUser?.displayName}</p>
                     {pathUrl !== '/' || sticky ? (
-                      <button onClick={() => signOut()} className="signUpBtn rounded-lg bg-primary bg-opacity-100 px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-20 hover:text-dark">
+                      <button onClick={handleLogout} className="signUpBtn rounded-lg bg-primary bg-opacity-100 px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-20 hover:text-dark">
                         Sign Out
                       </button>
                     ) : (
-                      <button onClick={() => signOut()} className="signUpBtn rounded-lg bg-white bg-opacity-20 px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark">
+                      <button onClick={handleLogout} className="signUpBtn rounded-lg hover:bg-primary/90 dark:bg-white/10 dark:hover:bg-white/20 bg-opacity-20 px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark">
                         Sign Out
                       </button>
                     )}
                   </>
-                ) : (
-                  <>
-                    {pathUrl !== '/' ? (
-                      <>
-                        <Link href="/auth/signin" className="px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white">
-                          Sign In
-                        </Link>
-                        <Link href="/auth/signup" className="rounded-lg bg-primary px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-primary/90 dark:bg-white/10 dark:hover:bg-white/20">
-                          Sign Up
-                        </Link>
-                      </>
-                    ) : (
-                      <>
-                        <Link href="/auth/signin" className={`px-7 py-3 text-base font-medium hover:opacity-70 ${sticky ? 'text-dark dark:text-white' : 'text-white'}`}>
-                          Sign In
-                        </Link>
-                        <Link
-                          href="/auth/signup"
-                          className={`rounded-lg px-6 py-3 text-base font-medium text-white duration-300 ease-in-out ${sticky ? 'bg-primary hover:bg-primary/90 dark:bg-white/10 dark:hover:bg-white/20' : 'bg-white/10 hover:bg-white/20'}`}
-                        >
-                          Sign Up
-                        </Link>
-                      </>
-                    )}
-                  </>
-                )}
+                  ) : (
+                    <>
+                      {!user && (
+                        <>
+                          {pathUrl !== '/' ? (
+                            <>
+                              <Link href="/auth/signin" className="px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white">
+                                Sign In
+                              </Link>
+                              <Link href="/auth/signup" className="rounded-lg bg-primary px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-primary/90 dark:bg-white/10 dark:hover:bg-white/20">
+                                Sign Up
+                              </Link>
+                            </>
+                          ) : (
+                            <>
+                            <Link href="/auth/signin" className="px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white">
+                              Sign In
+                            </Link>
+                            <Link href="/auth/signup" className="rounded-lg bg-primary px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-primary/90 dark:bg-white/10 dark:hover:bg-white/20">
+                              Sign Up
+                            </Link>
+                          </>
+                          )}
+                        </>
+                      )}
+                    </>
+                  )}
               </div>
             </div>
           </div>

@@ -15,8 +15,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <SessionProvider>
           <ThemeProvider>
-            <Header />
-            {children}
+            <SessionProvider>
+              <Header />
+              {children}
+            </SessionProvider>
           </ThemeProvider>
         </SessionProvider>
       </body>

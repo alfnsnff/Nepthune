@@ -1,10 +1,58 @@
 'use client';
-import { signIn } from 'next-auth/react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { auth, googleProvider } from '../../../lib/firebase-config';
+import React, { useState } from "react";
+import { createUserWithEmailAndPassword, signInWithPopup, updateProfile  } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 const SignUp = () => {
+  const router = useRouter();
+
+  const [username, setUsername] = useState('');
+
+  // sign up with google provider
+    const signInWithGoogle = async ()=>{
+      try{
+        await signInWithPopup(auth, googleProvider);
+        router.push('/');
+      } catch(err){
+        console.log(err);
+      }
+    };
+
+    // sign up with email and password
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('');
+
+
+    const onSubmit = async (e: any) => {
+      e.preventDefault();
+    
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        const user = auth.currentUser;
+    
+        if (user) {
+          await updateProfile(user, {
+            displayName: username,
+          });
+    
+          console.log(user);
+          router.push("/auth/signin");
+        } else {
+          console.error('User is not authenticated');
+        }
+      } catch (error: any) {
+        if (error instanceof Error) {
+          const errorCode = 'code' in error ? error.code : 'UNKNOWN_ERROR';
+          const errorMessage = error.message || 'An unknown error occurred';
+          console.log(errorCode, errorMessage);
+        } else {
+          console.error('An unknown error occurred:', error);
+        }
+      }
+    };
+
   return (
     <section className="bg-[#F4F7FF] py-14 dark:bg-dark lg:py-[90px]">
       <div className="container">
@@ -13,25 +61,28 @@ const SignUp = () => {
             <div className="wow fadeInUp shadow-form relative mx-auto max-w-[525px] overflow-hidden rounded-xl bg-white px-8 py-14 text-center dark:bg-dark-2 sm:px-12 md:px-[60px]" data-wow-delay=".15s">
               <div className="mb-10 text-center">
                 <Link href="/" className="mx-auto inline-block max-w-[160px]">
-                  <Image src="/images/logo/logo.svg" alt="logo" width={140} height={30} className="dark:hidden" />
-                  <Image src="/images/logo/logo-white.svg" alt="logo" width={140} height={30} className="hidden dark:block" />
+                  <h1 className='text-3xl'>Neptune</h1>
                 </Link>
               </div>
               <form >
                 <div className="mb-[22px]">
                   <input
                     type="text"
-                    placeholder="Name"
-                    name="name"
+                    placeholder="Username"
+                    name="username"
+                    id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     required
                     className="w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-dark outline-none transition placeholder:text-dark-6 focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white dark:focus:border-primary"
                   />
                 </div>
+
                 <div className="mb-[22px]">
                   <input
                     type="email"
                     placeholder="Email"
-                    name="email"
+                    name="email" id='email' value={email} onChange={(e) => setEmail(e.target.value)} 
                     required
                     className="w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-dark outline-none transition placeholder:text-dark-6 focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white dark:focus:border-primary"
                   />
@@ -41,12 +92,12 @@ const SignUp = () => {
                     type="password"
                     placeholder="Password"
                     name="password"
-                    required
+                    required value={password} onChange={(e) => setPassword(e.target.value)}
                     className="w-full rounded-md border border-stroke bg-transparent px-5 py-3 text-base text-dark outline-none transition placeholder:text-dark-6 focus:border-primary focus-visible:shadow-none dark:border-dark-3 dark:text-white dark:focus:border-primary"
                   />
                 </div>
                 <div className="mb-9">
-                  <button type="submit" className="w-full cursor-pointer rounded-md border border-primary bg-primary px-5 py-3 text-base text-white transition duration-300 ease-in-out hover:bg-blue-dark">
+                  <button type="submit" onClick={onSubmit} className="w-full cursor-pointer rounded-md border border-primary bg-primary px-5 py-3 text-base text-white transition duration-300 ease-in-out hover:bg-blue-dark">
                     Sign Up
                   </button>
                 </div>
@@ -57,17 +108,7 @@ const SignUp = () => {
               </span>
               <ul className="-mx-2 mb-9 flex justify-between">
                 <li className="w-full px-2">
-                  <button onClick={() => signIn('github')} className="flex h-11 w-full items-center justify-center rounded-md bg-[#1C9CEA] transition hover:bg-opacity-90">
-                    <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M19.5516 2.75538L20.9 1.25245C21.2903 0.845401 21.3968 0.53229 21.4323 0.375734C20.3677 0.939335 19.3742 1.1272 18.7355 1.1272H18.4871L18.3452 1.00196C17.4935 0.344423 16.429 0 15.2935 0C12.8097 0 10.8581 1.81605 10.8581 3.91389C10.8581 4.03914 10.8581 4.22701 10.8935 4.35225L11 4.97847L10.2548 4.94716C5.7129 4.82192 1.9871 1.37769 1.38387 0.782779C0.390323 2.34834 0.958064 3.85127 1.56129 4.79061L2.76774 6.54403L0.851613 5.6047C0.887097 6.91977 1.45484 7.95303 2.55484 8.7045L3.5129 9.33072L2.55484 9.67515C3.15806 11.272 4.50645 11.9296 5.5 12.18L6.8129 12.4932L5.57097 13.2446C3.58387 14.4971 1.1 14.4031 0 14.3092C2.23548 15.6869 4.89677 16 6.74194 16C8.12581 16 9.15484 15.8748 9.40322 15.7808C19.3387 13.7143 19.8 5.8865 19.8 4.32094V4.10176L20.0129 3.97652C21.2194 2.97456 21.7161 2.44227 22 2.12916C21.8935 2.16047 21.7516 2.22309 21.6097 2.2544L19.5516 2.75538Z"
-                        fill="white"
-                      />
-                    </svg>
-                  </button>
-                </li>
-                <li className="w-full px-2">
-                  <button onClick={() => signIn('google')} className="flex h-11 w-full items-center justify-center rounded-md bg-[#D64937] transition hover:bg-opacity-90">
+                  <button onClick={signInWithGoogle} className="flex h-11 w-full items-center justify-center rounded-md bg-[#D64937] transition hover:bg-opacity-90">
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
                         d="M17.8477 8.17132H9.29628V10.643H15.4342C15.1065 14.0743 12.2461 15.5574 9.47506 15.5574C5.95916 15.5574 2.8306 12.8821 2.8306 9.01461C2.8306 5.29251 5.81018 2.47185 9.47506 2.47185C12.2759 2.47185 13.9742 4.24567 13.9742 4.24567L15.7024 2.47185C15.7024 2.47185 13.3783 0.000145544 9.35587 0.000145544C4.05223 -0.0289334 0 4.30383 0 8.98553C0 13.5218 3.81386 18 9.44526 18C14.4212 18 17.9967 14.7141 17.9967 9.79974C18.0264 8.78198 17.8477 8.17132 17.8477 8.17132Z"
