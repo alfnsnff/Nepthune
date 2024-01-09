@@ -15,24 +15,12 @@ const menuData: Menu[] = [
   },
   {
     id: 3,
-    title: "Pricing",
-    path: "/pricing",
+    title: "Chat",
+    path: "/chat",
     newTab: false,
   },
   {
-    id: 5,
-    title: "Contact",
-    path: "/contact",
-    newTab: false,
-  },
-  {
-    id: 5,
-    title: "Blog",
-    path: "/blogs",
-    newTab: false,
-  },
-  {
-    id: 6,
+    id: 4,
     title: "Pages",
     newTab: false,
     submenu: [
@@ -44,36 +32,24 @@ const menuData: Menu[] = [
       },
       {
         id: 62,
-        title: "Pricing Page",
-        path: "/pricing",
+        title: "Chat Page",
+        path: "/Chat",
         newTab: false,
       },
       {
         id: 63,
-        title: "Contact Page",
-        path: "/contact",
-        newTab: false,
-      },
-      {
-        id: 64,
-        title: "Blog Grid Page",
-        path: "/blogs",
-        newTab: false,
-      },
-      {
-        id: 66,
         title: "Sign Up Page",
         path: "/auth/signup",
         newTab: false,
       },
       {
-        id: 67,
+        id: 64,
         title: "Sign In Page",
         path: "/auth/signin",
         newTab: false,
       },
       {
-        id: 68,
+        id: 65,
         title: "Error Page",
         path: "/error",
         newTab: false,

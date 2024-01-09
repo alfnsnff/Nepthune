@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import {getAuth, GoogleAuthProvider} from 'firebase/auth';
+import {getFirestore} from 'firebase/firestore';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -8,19 +9,17 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAy1xfQFhSXEVlLQSCf_iy4XceKXG76XNw",
-  authDomain: "neptune-9037b.firebaseapp.com",
-  projectId: "neptune-9037b",
-  storageBucket: "neptune-9037b.appspot.com",
-  messagingSenderId: "942145215800",
-  appId: "1:942145215800:web:373920adfe8576400ef5cd",
-  measurementId: "G-ZV67GBQGXZ"
+  apiKey: "AIzaSyCLJXX4PZBcOjz3ScxLD3mu6fF5IhBs6HI",
+  authDomain: "coba-da79c.firebaseapp.com",
+  projectId: "coba-da79c",
+  storageBucket: "coba-da79c.appspot.com",
+  messagingSenderId: "734373899266",
+  appId: "1:734373899266:web:52f040bcb592efd2640b1b",
+  measurementId: "G-TCVTPX7FC5"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 export const auth = getAuth(app);
-export default app;
-
 export const googleProvider = new GoogleAuthProvider();
+export const db = getFirestore(app);
