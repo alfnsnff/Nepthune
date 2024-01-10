@@ -1,8 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { collection, getDocs } from "firebase/firestore";
+import { teksDB, auth} from "../../lib/firebase-config";
+import { DonationData } from "../../types/donations";
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from "next/navigation";
 import { Metadata } from "next";
 
 // link bg
@@ -14,6 +17,37 @@ export const metadata: Metadata = {
 };
 
   const Hero = () => {
+    const router = useRouter();
+
+    const handleDonateClick = () => {
+      if (auth.currentUser) {
+        // Jika pengguna sudah login, bawa ke /donations
+        router.push('/donations');
+      } else {
+        // Jika pengguna belum login, bawa ke halaman sign-in
+        router.push('/auth/signin');
+      }
+    };
+
+    const [donations, setDonations] = useState<DonationData[]>([]);
+
+    // Fungsi untuk mendapatkan data donasi dari Firestore
+    const getDonationsData = async () => {
+      try {
+        const valRef = collection(teksDB, "donations");
+        const dataDb = await getDocs(valRef);
+        const allData = dataDb.docs.map((val) => ({ id: val.id, ...val.data() } as DonationData));
+  
+        // Update state dengan data donasi
+        setDonations(allData);
+      } catch (error) {
+        console.error("Error fetching donations data:", error);
+      }
+    };
+
+    useEffect(() => {
+      getDonationsData();
+    }, []);
 
   return (
     <>
@@ -28,7 +62,7 @@ export const metadata: Metadata = {
         }}
       >
         <div className="container">
-          <div className="-mx-4 flex flex-wrap items-center">
+          <div className="mx-4 flex flex-wrap items-center">
             <div className="mb-8 w-full px-4">
               <div className="hero-content wow fadeInUp mx-auto max-w-[780px] text-center" data-wow-delay=".2s">
                 <h1 className="mb-6 text-3xl font-bold leading-snug text-[#19394e] sm:text-4xl sm:leading-snug lg:text-5xl lg:leading-[1.2]">Share More. Waste Less.</h1>
@@ -52,18 +86,31 @@ export const metadata: Metadata = {
                 </div>
                 <ul className="mb-10 flex flex-wrap items-center justify-center gap-5">
                   <li>
-                    <Link
-                      href="https://nextjstemplates.com/templates/play"
-                      className="inline-flex items-center justify-center rounded-md bg-white px-7 py-[14px] text-center text-base font-medium text-dark shadow-1 transition duration-300 ease-in-out hover:bg-gray-2"
-                    >
+                      <button
+                      onClick={handleDonateClick}
+                      className="inline-flex items-center justify-center rounded-md bg-white px-7 py-[14px] text-center text-base font-medium text-dark shadow-1 transition duration-300 ease-in-out hover:bg-gray-2">
                       Donate Now
-                    </Link>
+                    </button>
                   </li>
                 </ul>
+              </div>
+              <div className='text-white'>
+                  <ul >
+                    {donations.map((donation) => (
+                      <li key={donation.id}>
+                        <p>Title: {donation.title}</p>
+                        <p>Category: {donation.category}</p>
+                        <p>Description: {donation.description}</p>
+                        <img src={donation.imageURL} alt={donation.title} />
+                        <p>Quantity: {donation.quantity}</p>
+                      </li>
+                    ))}
+                  </ul>
               </div>
             </div>
           </div>
         </div>
+        {/* Tampilkan data donationsnya */}
       </section>
     </>
   );
