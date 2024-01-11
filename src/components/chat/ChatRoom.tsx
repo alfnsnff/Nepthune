@@ -12,10 +12,17 @@ import { auth, db } from "@/lib/firebase-config";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
+interface Message {
+  id: string;
+  text: string;
+  user: string;
+  uid: string;
+}
+
 export default function Chat(props: any) {
   const { room } = props;
   const [newMessage, setNewMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const messagesRef = collection(db, "newmessages");
 
@@ -30,9 +37,9 @@ export default function Chat(props: any) {
       );
 
       const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
-        let messagesData: any = [];
+        let messagesData: Message[] = [];
         snapshot.forEach((doc) => {
-          messagesData.push({ ...doc.data(), id: doc.id });
+          messagesData.push({ ...(doc.data() as Message), id: doc.id });
         });
         setMessages(messagesData);
       });
@@ -65,7 +72,7 @@ export default function Chat(props: any) {
       <div className="header px-4 py-2 bg-black rounded text-white">
         <h1>Welcome to: {room.toUpperCase()}</h1>
       </div>
-      <div className="messages p-2 max-h-96 overflow-y-auto no-scrollbar">
+      <div className="messages p-2 h-96 overflow-y-auto no-scrollbar flex flex-col-reverse">
         {messages.map((message) => (
           <div
             className={`message flex mb-2 text-white ${
@@ -76,7 +83,6 @@ export default function Chat(props: any) {
             key={message.id}
           >
             <div className="bg-black px-3 py-1 rounded-xl">
-              {/* <span className="user font-bold pr-2 s">{message.user}</span> */}
               {message.text}
             </div>
           </div>
