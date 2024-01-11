@@ -12,7 +12,7 @@ export default function Home() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user:any) => {
+    onAuthStateChanged(auth, (user: any) => {
       setUser(user);
     });
   }, []);
@@ -30,20 +30,26 @@ export default function Home() {
   } else {
     return (
       <>
-        <Breadcrumb pageName="Discuss" />
-        {room ? (
-          <Chatroom room={room} />
-        ) : (
-          <div className="room mx-24 space-y-2">
-            <label className="px-4">Enter Room Name : </label>
+        {/* <Breadcrumb pageName="Discuss" /> */}
+
+        <div className="flex m-24 p-12 border-2 rounded-xl space-x-5 ">
+          <div className="room space-y-2 w-1/3 ">
+            {/* <label className="px-4">Enter Room Name : </label> */}
             <div className="flex space-x-4">
-              <Input ref={roomInputRef} />
-              <Button type="submit" onClick={() => setRoom(roomInputRef.current.value)}>
+              <Input 
+              placeholder="Room here ..."
+              ref={roomInputRef} />
+              <Button
+                type="submit"
+                onClick={() => setRoom(roomInputRef.current.value)}
+              >
                 Enter Chat
               </Button>
             </div>
           </div>
-        )}
+          <span className="border-r-2"></span>
+          <Chatroom room={room}/>
+        </div>
       </>
     );
   }
