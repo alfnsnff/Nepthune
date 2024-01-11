@@ -9,7 +9,7 @@ const ItemsData: Items[] = [
         location: "San Francisco, CA",
         total: 2,
         btn: "get",
-        btnLink: "/#",
+        btnLink: "/item/",
     },
     {
         id: 2,
@@ -19,7 +19,7 @@ const ItemsData: Items[] = [
         location: "Banda Aceh",
         total: 2,
         btn: "get",
-        btnLink: "/#",
+        btnLink: "/item/",
     },
     {
         id: 3,

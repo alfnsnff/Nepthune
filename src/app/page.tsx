@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Hero from '@/components/Hero';
 import ScrollUp from '@/components/common/ScrollUp';
+import Items from '@/components/Items';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -13,6 +14,7 @@ export default function Home() {
     <main>
       <ScrollUp />
       <Hero />
+      <Items />
     </main>
   );
 }

@@ -1,13 +1,13 @@
 const SectionTitle = ({
   subtitle,
   title,
-  paragraph,
+  info,
   width = "635px",
   center,
 }: {
   subtitle?: string;
   title: string;
-  paragraph: string;
+  info: string;
   width?: string;
   center?: boolean;
 }) => {
@@ -29,7 +29,7 @@ const SectionTitle = ({
           {title}
         </h2>
         <p className="text-base leading-relaxed text-body-color dark:text-dark-6 sm:leading-relaxed">
-          {paragraph}
+          {info}
         </p>
       </div>
     </div>
