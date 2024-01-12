@@ -12,7 +12,7 @@ import { provinceDistrictsData } from './provinceDistrictsData';
 
 const DonationsForm = () => {
   const router = useRouter();
-  const [title, setTitle] = useState(''); // Memastikan tipe data string pada useState
+  const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
@@ -26,7 +26,6 @@ const DonationsForm = () => {
   const handleUpload = (e: any) => {
     const file = e.target.files[0];
 
-    // Menggunakan try-catch untuk menangani error dengan lebih baik
     try {
       const imgRef = ref(imgDB, `Imgs/${v4()}`);
       uploadBytes(imgRef, file).then((snapshot) => {
@@ -114,9 +113,6 @@ const DonationsForm = () => {
       </div>
 
       <div className="lg:w-1/2 w-full h-full flex-col flex items-center justify-center text-center md:px-16 px-0 z-0 bg-[#161616]">
-        {/* <div className="absolute lg:hidden z-10 inset-0 bg-gray-500 bg-no-repeat bg-cover items-center">
-          <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
-        </div> */}
         <div className="w-full md:px-0 px-4 py-20 z-20 ">
           <form>
             <div className="flex flex-col gap-2 justify-start items-start">

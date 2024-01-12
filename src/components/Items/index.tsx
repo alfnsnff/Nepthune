@@ -1,6 +1,6 @@
 import SectionTitle from '../common/SectionTitle';
 import SingleCard from './SingleCard';
-import { Items } from '@/types/items'; // Import the correct type
+import { Items } from '@/types/items';
 
 const ItemsComponent = ({ itemsData }: { itemsData: Items[] }) => {
   return (

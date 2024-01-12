@@ -59,7 +59,6 @@ const DonationEdit = () => {
         });
 
         alert("Data edited successfully");
-        // window.location.href = "/mydonations";
         router.push('/mydonations');
         
       } else {

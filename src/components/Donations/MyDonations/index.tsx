@@ -35,7 +35,7 @@ const MyDonations = () => {
           const donationDocRef = doc(teksDB, 'donations', donationId);
           await deleteDoc(donationDocRef);
           alert('Data deleted successfully');
-          await getUserDonations(); // Tunggu hingga pengambilan ulang data selesai sebelum memperbarui state
+          await getUserDonations();
         } catch (error) {
           console.error('Error deleting document:', error);
         }
@@ -73,7 +73,6 @@ const MyDonations = () => {
                     <p>District: {donation.district}</p>
                     <p>Deadline: {formatDeadline(donation.deadline)}</p>
                     <img src={donation.imageURL} alt={donation.title} />
-                    {/* Menambahkan deklarasi variabel donation di sini */}
                     <button className='bg-slate-400 px-2 py-3' onClick={() => deleteDonation(donation.id)}>
                         Delete
                     </button>

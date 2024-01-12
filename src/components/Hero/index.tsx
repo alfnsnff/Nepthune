@@ -136,7 +136,7 @@ export const metadata: Metadata = {
           district: donation.district,
           deadline: donation.deadline,           
           btn: "Take",
-          btnLink: "123"
+          btnLink: `donation-detail/${donation.id}`
         }))} />
       </section>
 
