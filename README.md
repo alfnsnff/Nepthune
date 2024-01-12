@@ -1,10 +1,11 @@
 # Nepthune
 ## Snapshot
-![alt text](https://drive.google.com/file/d/1o5hf7SZBJTBxJL5cJpciCaRHfWfYw5E6/view?usp=drive_link)
-![alt text](https://drive.google.com/file/d/12KsFcx5zASA1wgu_txxaXXIMdNfsKBex/view?usp=drive_link)
-![alt text](https://drive.google.com/file/d/1BgyQZY8wq4-cJOgg5rW1FhCsnQXxsWGX/view?usp=drive_link)
-![alt text](https://drive.google.com/file/d/1cQDsGnq-wxbyxtKGgf-9zuDO6rh_AY7F/view?usp=drive_link)
-![alt text](https://drive.google.com/file/d/1JRcOfODTI4WO5YLPEm9iWlmR745x2MWI/view?usp=drive_link)
+![image](https://drive.google.com/file/d/1o5hf7SZBJTBxJL5cJpciCaRHfWfYw5E6/view?usp=sharing)
+![image](https://drive.google.com/file/d/12KsFcx5zASA1wgu_txxaXXIMdNfsKBex/view?usp=sharing)
+![image](https://drive.google.com/file/d/1BgyQZY8wq4-cJOgg5rW1FhCsnQXxsWGX/view?usp=sharing)
+![image](https://drive.google.com/file/d/1cQDsGnq-wxbyxtKGgf-9zuDO6rh_AY7F/view?usp=sharing)
+![image](https://drive.google.com/file/d/1JRcOfODTI4WO5YLPEm9iWlmR745x2MWI/view?usp=sharing)
+
 
 ## Getting Started
 
