@@ -12,6 +12,7 @@ import {
 
 import {DonationData} from '../../types/donations';
 import { addDoc, collection, getDocs } from "firebase/firestore";
+import { provinceDistrictsData } from "./provinceDistrictsData";
 
 const DonationsForm = () => {
     const router = useRouter();
@@ -20,6 +21,9 @@ const DonationsForm = () => {
     const [description, setDescription] = useState("");
     const [image, setImage] = useState("");
     const [quantity, setQuantity] = useState(1);
+    const [province, setProvince] = useState("");
+    const [district, setDistrict] = useState("");
+    const [deadline, setDeadline] = useState<string>("");
     const [data, setData] = useState<DonationData[]>([]);
 
   const handleUpload = (e:any) => {
@@ -44,11 +48,15 @@ const DonationsForm = () => {
     try {
       const newDocRef = await addDoc(valRef, {
         userId: auth.currentUser?.uid,
+        username: auth.currentUser?.displayName,
         title: title,
         category: category,
         description: description,
         imageURL: image,
         quantity: quantity,
+        province: province,
+        district: district,
+        deadline: deadline
       });
 
       const donationId = newDocRef.id; 
@@ -59,6 +67,23 @@ const DonationsForm = () => {
       console.error('Error adding document:', error);
     }
   };
+
+  const handleProvinceChange = (e:any) => {
+    const selectedProvince = e.target.value;
+    setProvince(selectedProvince);
+    setDistrict("");
+
+    if (provinceDistrictsData[selectedProvince]) {
+      const districtsForProvince = provinceDistrictsData[selectedProvince];
+      setDistrictOptions(districtsForProvince);
+    }
+  };
+
+  const handleDistrictChange = (e:any) => {
+    setDistrict(e.target.value);
+  };
+
+  const [districtOptions, setDistrictOptions] = useState<string[]>([]);
 
   const getData = async () => {
     const valRef = collection(teksDB, "donations");
@@ -111,6 +136,38 @@ const DonationsForm = () => {
         <br />
         <label htmlFor="quantity">Quantity</label>
         <input type="number" name="quantity" id="quantity" value={quantity} onChange={(e)=> setQuantity(parseInt(e.target.value))} />
+        <br />
+        <label htmlFor="province">Province</label>
+        <select id="province" value={province} onChange={handleProvinceChange}>
+          <option value="">Select Province</option>
+          {Object.keys(provinceDistrictsData).map((province) => (
+            <option key={province} value={province}>
+              {province}
+            </option>
+          ))}
+        </select>
+        <br />
+        <label htmlFor="district">District</label>
+        <select
+          id="district"
+          value={district}
+          onChange={handleDistrictChange}
+          disabled={districtOptions.length === 0}>
+          <option value="">Select District</option>
+          {districtOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+        <br />
+        <label htmlFor="deadline">Available Until:</label>
+        <input
+          type="datetime-local"
+          id="deadline"
+          value={deadline}
+          onChange={(e) => setDeadline(e.target.value)}
+        />
         <br />
         <button type="button" onClick={handleClick}>
           Submit

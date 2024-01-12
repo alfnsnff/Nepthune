@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs } from "firebase/firestore";
+import {  collection, getDocs, query, where} from "firebase/firestore";
 import { teksDB, auth} from "../../lib/firebase-config";
 import { DonationData } from "../../types/donations";
 import Image from 'next/image';
 import { useRouter } from "next/navigation";
 import { Metadata } from "next";
+import Items from '../Items/index';
+
 
 // link bg
 // https://www.freepik.com/free-vector/gradient-mountain-landscape_20547362.htm#query=nature%20illustration&position=0&from_view=keyword&track=ais&uuid=4544d526-34b8-4928-b2c6-fbb482537c52
@@ -18,6 +20,10 @@ export const metadata: Metadata = {
 
   const Hero = () => {
     const router = useRouter();
+    const [userDonations, setUserDonations] = useState<DonationData[]>([]);
+
+
+    
 
     const handleDonateClick = () => {
       if (auth.currentUser) {
@@ -30,6 +36,26 @@ export const metadata: Metadata = {
     };
 
     const [donations, setDonations] = useState<DonationData[]>([]);
+
+    const getUserDonations = async () => {
+      try {
+      const userDonationsRef = collection(teksDB, 'donations');
+      const userDonationsQuery = query(
+          userDonationsRef,
+          where('userId', '==', auth.currentUser?.uid)
+      );
+
+      const userDonationsData = await getDocs(userDonationsQuery);
+      const userDonations = userDonationsData.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+      })) as DonationData[];
+
+      setUserDonations(userDonations);
+      } catch (error) {
+      console.error('Error fetching user donations:', error);
+      }
+  };
 
     // Fungsi untuk mendapatkan data donasi dari Firestore
     const getDonationsData = async () => {
@@ -94,24 +120,26 @@ export const metadata: Metadata = {
                   </li>
                 </ul>
               </div>
-              <div className='text-white'>
-                  <ul >
-                    {donations.map((donation) => (
-                      <li key={donation.id}>
-                        <p>Title: {donation.title}</p>
-                        <p>Category: {donation.category}</p>
-                        <p>Description: {donation.description}</p>
-                        <img src={donation.imageURL} alt={donation.title} />
-                        <p>Quantity: {donation.quantity}</p>
-                      </li>
-                    ))}
-                  </ul>
-              </div>
             </div>
           </div>
         </div>
-        {/* Tampilkan data donationsnya */}
       </section>
+      <section>
+        <Items itemsData={donations.map(donation => ({
+          id: donation.id,
+          img: donation.imageURL, 
+          user: donation.username,
+          title: donation.title, 
+          category: donation.category,
+          total: donation.quantity, 
+          province: donation.province,
+          district: donation.district,
+          deadline: donation.deadline,           
+          btn: "Take",
+          btnLink: "123"
+        }))} />
+      </section>
+
     </>
   );
 };
