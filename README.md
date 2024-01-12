@@ -1,10 +1,10 @@
 # Nepthune
 ## Snapshot
-![image](https://drive.google.com/file/d/1o5hf7SZBJTBxJL5cJpciCaRHfWfYw5E6/view?usp=sharing)
-![image](https://drive.google.com/file/d/12KsFcx5zASA1wgu_txxaXXIMdNfsKBex/view?usp=sharing)
-![image](https://drive.google.com/file/d/1BgyQZY8wq4-cJOgg5rW1FhCsnQXxsWGX/view?usp=sharing)
-![image](https://drive.google.com/file/d/1cQDsGnq-wxbyxtKGgf-9zuDO6rh_AY7F/view?usp=sharing)
-![image](https://drive.google.com/file/d/1JRcOfODTI4WO5YLPEm9iWlmR745x2MWI/view?usp=sharing)
+![image](https://drive.google.com/uc?export=view&id=1o5hf7SZBJTBxJL5cJpciCaRHfWfYw5E6)
+![image](https://drive.google.com/uc?export=view&id=12KsFcx5zASA1wgu_txxaXXIMdNfsKBex)
+![image](https://drive.google.com/uc?export=view&id=1BgyQZY8wq4-cJOgg5rW1FhCsnQXxsWGX)
+![image](https://drive.google.com/uc?export=view&id=1cQDsGnq-wxbyxtKGgf-9zuDO6rh_AY7F)
+![image](https://drive.google.com/uc?export=view&id=1JRcOfODTI4WO5YLPEm9iWlmR745x2MWI)
 
 
 ## Getting Started
