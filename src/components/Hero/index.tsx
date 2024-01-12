@@ -1,9 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import {  collection, getDocs, query, where} from "firebase/firestore";
+import { teksDB, auth} from "../../lib/firebase-config";
+import { DonationData } from "../../types/donations";
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from "next/navigation";
 import { Metadata } from "next";
+import Items from '../Items/index';
+
 
 // link bg
 // https://www.freepik.com/free-vector/gradient-mountain-landscape_20547362.htm#query=nature%20illustration&position=0&from_view=keyword&track=ais&uuid=4544d526-34b8-4928-b2c6-fbb482537c52
@@ -14,6 +19,61 @@ export const metadata: Metadata = {
 };
 
   const Hero = () => {
+    const router = useRouter();
+    const [userDonations, setUserDonations] = useState<DonationData[]>([]);
+
+
+    
+
+    const handleDonateClick = () => {
+      if (auth.currentUser) {
+        // Jika pengguna sudah login, bawa ke /donations
+        router.push('/donations');
+      } else {
+        // Jika pengguna belum login, bawa ke halaman sign-in
+        router.push('/auth/signin');
+      }
+    };
+
+    const [donations, setDonations] = useState<DonationData[]>([]);
+
+    const getUserDonations = async () => {
+      try {
+      const userDonationsRef = collection(teksDB, 'donations');
+      const userDonationsQuery = query(
+          userDonationsRef,
+          where('userId', '==', auth.currentUser?.uid)
+      );
+
+      const userDonationsData = await getDocs(userDonationsQuery);
+      const userDonations = userDonationsData.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+      })) as DonationData[];
+
+      setUserDonations(userDonations);
+      } catch (error) {
+      console.error('Error fetching user donations:', error);
+      }
+  };
+
+    // Fungsi untuk mendapatkan data donasi dari Firestore
+    const getDonationsData = async () => {
+      try {
+        const valRef = collection(teksDB, "donations");
+        const dataDb = await getDocs(valRef);
+        const allData = dataDb.docs.map((val) => ({ id: val.id, ...val.data() } as DonationData));
+  
+        // Update state dengan data donasi
+        setDonations(allData);
+      } catch (error) {
+        console.error("Error fetching donations data:", error);
+      }
+    };
+
+    useEffect(() => {
+      getDonationsData();
+    }, []);
 
   return (
     <>
@@ -28,7 +88,7 @@ export const metadata: Metadata = {
         }}
       >
         <div className="container">
-          <div className="-mx-4 flex flex-wrap items-center">
+          <div className="mx-4 flex flex-wrap items-center">
             <div className="mb-8 w-full px-4">
               <div className="hero-content wow fadeInUp mx-auto max-w-[780px] text-center" data-wow-delay=".2s">
                 <h1 className="mb-6 text-3xl font-bold leading-snug text-[#19394e] sm:text-4xl sm:leading-snug lg:text-5xl lg:leading-[1.2]">Share More. Waste Less.</h1>
@@ -52,12 +112,11 @@ export const metadata: Metadata = {
                 </div>
                 <ul className="mb-10 flex flex-wrap items-center justify-center gap-5">
                   <li>
-                    <Link
-                      href="https://nextjstemplates.com/templates/play"
-                      className="inline-flex items-center justify-center rounded-md bg-white px-7 py-[14px] text-center text-base font-medium text-dark shadow-1 transition duration-300 ease-in-out hover:bg-gray-2"
-                    >
+                      <button
+                      onClick={handleDonateClick}
+                      className="inline-flex items-center justify-center rounded-md bg-white px-7 py-[14px] text-center text-base font-medium text-dark shadow-1 transition duration-300 ease-in-out hover:bg-gray-2">
                       Donate Now
-                    </Link>
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -65,6 +124,22 @@ export const metadata: Metadata = {
           </div>
         </div>
       </section>
+      <section>
+        <Items itemsData={donations.map(donation => ({
+          id: donation.id,
+          img: donation.imageURL, 
+          user: donation.username,
+          title: donation.title, 
+          category: donation.category,
+          total: donation.quantity, 
+          province: donation.province,
+          district: donation.district,
+          deadline: donation.deadline,           
+          btn: "Take",
+          btnLink: "123"
+        }))} />
+      </section>
+
     </>
   );
 };
