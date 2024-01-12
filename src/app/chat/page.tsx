@@ -7,6 +7,18 @@ import Breadcrumb from "@/components/common/Breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from "@/components/ui/command"
+
+import {
   addDoc,
   collection,
   serverTimestamp,
@@ -14,16 +26,23 @@ import {
   query,
   where,
   orderBy,
+  setDoc,
+  doc,
 } from "firebase/firestore";
 import { Message } from "postcss";
+
+// ... (previous imports)
+
+const chatsCollection = collection(db, "chats");
 
 export default function Chat() {
   const [user, setUser] = useState<any>(null);
   const [room, setRoom] = useState("");
-  const roomInputRef = useRef<HTMLInputElement | null>(null);
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
-  const chatsCollection = collection(db, "chats");
+
+  // No Used
+  // const roomInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user: any) => {
@@ -36,7 +55,7 @@ export default function Chat() {
   useEffect(() => {
     const currentUser = auth.currentUser;
 
-    if (currentUser) {
+    if (currentUser && room) {
       const queryMessages = query(
         collection(chatsCollection, room, "messages"),
         orderBy("timestamp")
@@ -54,10 +73,24 @@ export default function Chat() {
     }
   }, [room]);
 
-  const handleUserButtonClick = (buttonUid: string) => {
-    const combinedId = `${user.uid > buttonUid ? user.uid : buttonUid}&&${
-      user.uid > buttonUid ? buttonUid : user.uid
+  const handleUserButtonClick = async (buttonUid: string) => {
+    const combinedId = `${user?.uid > buttonUid ? user.uid : buttonUid}&&${
+      user?.uid > buttonUid ? buttonUid : user?.uid
     }`;
+
+    // Add the user to the members field in the chat document
+    const chatRef = doc(chatsCollection, combinedId);
+    await setDoc(
+      chatRef,
+      {
+        members: {
+          [user?.uid]: true,
+          [buttonUid]: true,
+        },
+      },
+      { merge: true }
+    );
+
     setRoom(combinedId);
   };
 
@@ -67,7 +100,7 @@ export default function Chat() {
 
     const currentUser = auth.currentUser;
 
-    if (currentUser) {
+    if (currentUser && room) {
       const chatRef = collection(chatsCollection, room, "messages");
 
       await addDoc(chatRef, {
@@ -88,8 +121,9 @@ export default function Chat() {
           <Signin />
         </>
       ) : (
-        <div className="flex m-24 p-12 border-2 rounded-xl space-x-5 ">
+        <div className="flex m-24 border-2 rounded-xl ">
           <div className="room space-y-2 w-1/3 ">
+            {/* No Used */}
             {/* <div className="flex space-x-4">
               <Input placeholder="Room here ..." ref={roomInputRef} />
               <Button
@@ -99,7 +133,7 @@ export default function Chat() {
                 Enter Chat
               </Button>
             </div> */}
-            <div className="font-bold text-xl space-y-2 flex flex-col">
+            <div className="font-bold text-xl flex flex-col pt-10">
               {[
                 { uid: "ONZsXmXNIhUcuwSV50KBJoRNEap2", name: "AlfanEdge" },
                 { uid: "Jx9eUrVXqAXSGvUQ2eRHqSgDkpl2", name: "AlfanChrome" },
@@ -112,7 +146,8 @@ export default function Chat() {
                   key={uid}
                   type="submit"
                   onClick={() => handleUserButtonClick(uid)}
-                  disabled={user.uid === uid}
+                  disabled={user?.uid === uid}
+                  className="rounded-none"
                 >
                   {name}
                 </Button>
@@ -120,20 +155,18 @@ export default function Chat() {
             </div>
           </div>
           <span className="border-r-2"></span>
-          <div className="chat-app w-full ">
-            <div className="header px-4 py-2 bg-black rounded text-white">
+          <div className="w-full">
+            <div className="px-4 py-2 bg-black text-white rounded-tr-lg">
               <h1>Welcome to: {room.toUpperCase()}</h1>
             </div>
-            <div className="messages p-2 h-96 overflow-y-auto no-scrollbar flex flex-col-reverse">
+            <div className="p-2 h-96 overflow-y-auto no-scrollbar flex flex-col-reverse">
               {messages
                 .slice()
                 .reverse()
                 .map((message) => (
                   <div
-                    className={`message flex mb-2 text-white ${
-                      auth.currentUser?.uid === message.senderId
-                        ? "justify-end"
-                        : ""
+                    className={`flex mb-2 text-white ${
+                      user?.uid === message.senderId ? "justify-end" : ""
                     }`}
                     key={message.id}
                   >
@@ -145,15 +178,15 @@ export default function Chat() {
             </div>
             <form
               onSubmit={handleSubmit}
-              className="new-message-form flex space-x-4"
+              className="flex space-x-4"
             >
               <Input
-                className="new-message-input"
+                className="rounded-none"
                 placeholder="Type your message here.."
                 onChange={(e) => setNewMessage(e.target.value)}
                 value={newMessage}
               />
-              <Button type="submit" className="send-button">
+              <Button type="submit" className="rounded-none rounded-br-lg">
                 Send
               </Button>
             </form>
