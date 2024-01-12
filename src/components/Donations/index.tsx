@@ -24,6 +24,7 @@ const DonationsForm = () => {
     const [province, setProvince] = useState("");
     const [district, setDistrict] = useState("");
     const [deadline, setDeadline] = useState<string>("");
+    const [districtOptions, setDistrictOptions] = useState<string[]>([]);
     const [data, setData] = useState<DonationData[]>([]);
 
   const handleUpload = (e:any) => {
@@ -83,7 +84,6 @@ const DonationsForm = () => {
     setDistrict(e.target.value);
   };
 
-  const [districtOptions, setDistrictOptions] = useState<string[]>([]);
 
   const getData = async () => {
     const valRef = collection(teksDB, "donations");
@@ -97,8 +97,6 @@ const DonationsForm = () => {
   useEffect(() => {
     getData();
   }, []);
-
-  console.log(data, "datadata");
 
   return (
     <div className="lg:py-28">
