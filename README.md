@@ -1,6 +1,10 @@
 # Nepthune
-
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Snapshot
+![alt text](https://drive.google.com/file/d/1o5hf7SZBJTBxJL5cJpciCaRHfWfYw5E6/view?usp=drive_link)
+![alt text](https://drive.google.com/file/d/12KsFcx5zASA1wgu_txxaXXIMdNfsKBex/view?usp=drive_link)
+![alt text](https://drive.google.com/file/d/1BgyQZY8wq4-cJOgg5rW1FhCsnQXxsWGX/view?usp=drive_link)
+![alt text](https://drive.google.com/file/d/1cQDsGnq-wxbyxtKGgf-9zuDO6rh_AY7F/view?usp=drive_link)
+![alt text](https://drive.google.com/file/d/1JRcOfODTI4WO5YLPEm9iWlmR745x2MWI/view?usp=drive_link)
 
 ## Getting Started
 
