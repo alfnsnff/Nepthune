@@ -64,7 +64,6 @@ const DonationDetail = () => {
   const formatDeadline = (deadline: string): string => {
     const deadlineDate = new Date(deadline);
   
-    // Periksa apakah deadlineDate adalah waktu yang valid
     if (isNaN(deadlineDate.getTime())) {
       return "Invalid Deadline";
     }
