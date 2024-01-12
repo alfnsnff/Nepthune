@@ -16,7 +16,7 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 
 import {
   addDoc,
@@ -40,9 +40,7 @@ export default function Chat() {
   const [room, setRoom] = useState("");
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
-
-  // No Used
-  // const roomInputRef = useRef<HTMLInputElement | null>(null);
+  const roomInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user: any) => {
@@ -78,7 +76,6 @@ export default function Chat() {
       user?.uid > buttonUid ? buttonUid : user?.uid
     }`;
 
-    // Add the user to the members field in the chat document
     const chatRef = doc(chatsCollection, combinedId);
     await setDoc(
       chatRef,
@@ -121,77 +118,106 @@ export default function Chat() {
           <Signin />
         </>
       ) : (
-        <div className="flex m-24 border-2 rounded-xl ">
-          <div className="room space-y-2 w-1/3 ">
-            {/* No Used */}
-            {/* <div className="flex space-x-4">
-              <Input placeholder="Room here ..." ref={roomInputRef} />
-              <Button
-                type="submit"
-                onClick={() => setRoom(roomInputRef.current?.value || "")}
-              >
-                Enter Chat
-              </Button>
-            </div> */}
-            <div className="font-bold text-xl flex flex-col pt-10">
-              {[
-                { uid: "ONZsXmXNIhUcuwSV50KBJoRNEap2", name: "AlfanEdge" },
-                { uid: "Jx9eUrVXqAXSGvUQ2eRHqSgDkpl2", name: "AlfanChrome" },
-                { uid: "ozHKyC8TTneFyxVQzWNcP0H0Whk2", name: "Rifa" },
-                { uid: "5MWbqmNUVCRpDKaqCC7wKkRZVG83", name: "Ryparuk" },
-                { uid: "LyFCbY1nTcTmYbPwbWNlbJHuoAX2", name: "Rifausk" },
-                { uid: "nZv5OgXYLzQTx9U13LNMQIfZFJX2", name: "Habil" },
-              ].map(({ uid, name }) => (
+        <>
+          <div className="h-[520px] mt-24 flex m-16 border-2 rounded-xl drop-shadow">
+            <div className="space-y-2 w-2/5 overflow-y-auto no-scrollbar">
+              {/* <div className="flex space-x-4">
+                <Input placeholder="Room here ..." ref={roomInputRef} />
                 <Button
-                  key={uid}
                   type="submit"
-                  onClick={() => handleUserButtonClick(uid)}
-                  disabled={user?.uid === uid}
-                  className="rounded-none"
+                  onClick={() => setRoom(roomInputRef.current?.value || "")}
                 >
-                  {name}
+                  Enter Chat
                 </Button>
-              ))}
-            </div>
-          </div>
-          <span className="border-r-2"></span>
-          <div className="w-full">
-            <div className="px-4 py-2 bg-black text-white rounded-tr-lg">
-              <h1>Welcome to: {room.toUpperCase()}</h1>
-            </div>
-            <div className="p-2 h-96 overflow-y-auto no-scrollbar flex flex-col-reverse">
-              {messages
-                .slice()
-                .reverse()
-                .map((message) => (
-                  <div
-                    className={`flex mb-2 text-white ${
-                      user?.uid === message.senderId ? "justify-end" : ""
-                    }`}
-                    key={message.id}
+              </div> */}
+              <div className="font-bold text-xl flex flex-col">
+                {[
+                  { uid: "ONZsXmXNIhUcuwSV50KBJoRNEap2", name: "AlfanEdge" },
+                  { uid: "Jx9eUrVXqAXSGvUQ2eRHqSgDkpl2", name: "AlfanChrome" },
+                  { uid: "ozHKyC8TTneFyxVQzWNcP0H0Whk2", name: "Rifa" },
+                  { uid: "5MWbqmNUVCRpDKaqCC7wKkRZVG83", name: "Ryparuk" },
+                  { uid: "LyFCbY1nTcTmYbPwbWNlbJHuoAX2", name: "Rifausk" },
+                  { uid: "nZv5OgXYLzQTx9U13LNMQIfZFJX2", name: "Habil" },
+                  { uid: "nZv5OgXYLzQTx9U13LNMQIfZFJX2", name: "Habil" },
+                  { uid: "nZv5OgXYLzQTx9U13LNMQIfZFJX2", name: "Habil" },
+                  { uid: "nZv5OgXYLzQTx9U13LNMQIfZFJX2", name: "Habil" },
+                  { uid: "nZv5OgXYLzQTx9U13LNMQIfZFJX2", name: "Habil" },
+                  { uid: "nZv5OgXYLzQTx9U13LNMQIfZFJX2", name: "Habil" },
+                  { uid: "nZv5OgXYLzQTx9U13LNMQIfZFJX2", name: "Habil" },
+                  { uid: "nZv5OgXYLzQTx9U13LNMQIfZFJX2", name: "Habil" },
+                ].map(({ uid, name }) => (
+                  <Button
+                    key={uid}
+                    type="submit"
+                    onClick={() => handleUserButtonClick(uid)}
+                    disabled={user?.uid === uid}
+                    className="rounded-none py-8 bg-white text-black hover:bg-slate-300 border-b"
                   >
-                    <div className="bg-black px-3 py-1 rounded-xl">
-                      {message.content}
-                    </div>
-                  </div>
+                    {name}
+                  </Button>
                 ))}
+              </div>
             </div>
-            <form
-              onSubmit={handleSubmit}
-              className="flex space-x-4"
-            >
-              <Input
-                className="rounded-none"
-                placeholder="Type your message here.."
-                onChange={(e) => setNewMessage(e.target.value)}
-                value={newMessage}
-              />
-              <Button type="submit" className="rounded-none rounded-br-lg">
-                Send
-              </Button>
-            </form>
+            <span className="border-r-2"></span>
+            <div className="w-full bg-blue-50 h-full flex flex-col justify-between">
+              <div className="px-4 py-4 bg-white rounded-tr-lg drop-shadow">
+                {room ? (
+                  <h1>{room.toUpperCase()}</h1>
+                ) : (
+                  <h1>Discuss</h1>
+                )}
+              </div>
+              <div className="py-4 space-y-2 text-md overflow-y-auto no-scrollbar flex flex-col-reverse">
+                {messages
+                  .slice()
+                  .reverse()
+                  .map((message) => (
+                    <div
+                      className={`flex ${
+                        user?.uid === message.senderId ? "justify-end" : ""
+                      }`}
+                      key={message.id}
+                    >
+                      <div
+                        className={` px-4 py-2 rounded-xl  ${
+                          user?.uid === message.senderId
+                            ? "rounded-tr-none bg-green-400"
+                            : "rounded-tl-none bg-white"
+                        }`}
+                        key={message.id}
+                      >
+                        <div className="flex items-end">
+                          {message.content}
+                          <div className="text-gray-500 justify-self-end text-xs/[1px] pl-2 pb-1">
+                            {new Date(
+                              message.timestamp?.seconds * 1000
+                            ).toLocaleTimeString([], {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+              <form onSubmit={handleSubmit} className="flex">
+                <Input
+                  className="rounded-none"
+                  placeholder="Type your message here.."
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  value={newMessage}
+                />
+                <Button
+                  type="submit"
+                  className="rounded-none rounded-br-lg bg-green-400"
+                >
+                  Send
+                </Button>
+              </form>
+            </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );
