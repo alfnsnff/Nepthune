@@ -9,6 +9,7 @@ import { provinceDistrictsData } from '../provinceDistrictsData';
 import { useRouter } from 'next/navigation';
 
 const DonationDetail = () => {
+  const [username, setUsername] = useState("");
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
@@ -44,6 +45,7 @@ const DonationDetail = () => {
         return;
       }
       const initialCategory = donationToEdit.category || '';
+      setUsername(donationToEdit.username);
       setTitle(donationToEdit.title);
       setCategory(initialCategory);
       setDescription(donationToEdit.description);
@@ -105,7 +107,7 @@ const DonationDetail = () => {
               <img alt="Developer" src="/images/user.svg" className="h-16 w-16  object-cover" />
 
               <div>
-                <h3 className="text-lg font-medium text-black">Karim</h3>
+                <h3 className="text-lg font-medium text-black">{username && username.charAt(0).toUpperCase() + username.slice(1)}</h3>
 
                 <div className="flow-root">
                   <ul className="-m-1 flex flex-wrap">
