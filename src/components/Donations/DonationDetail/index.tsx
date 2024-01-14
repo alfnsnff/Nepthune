@@ -10,10 +10,10 @@ import { useRouter } from 'next/navigation';
 
 const DonationDetail = () => {
   const [username, setUsername] = useState("");
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
-  const [description, setDescription] = useState('');
-  const [image, setImage] = useState('');
+  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [province, setProvince] = useState('');
   const [district, setDistrict] = useState('');
