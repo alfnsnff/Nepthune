@@ -24,12 +24,32 @@ const DonationEdit = () => {
   const [deadline, setDeadline] = useState<string>("");
   const [donationId, setDonationId] = useState<string | null>(null);
   const [districtOptions, setDistrictOptions] = useState<string[]>([]);
+  const [isFormValid, setIsFormValid] = useState(false);
+
   
   const router = useRouter();
 
+  const validateForm = () => {
+    const isValid =
+      title !== '' &&
+      category !== '' &&
+      description !== '' &&
+      image !== '' &&
+      quantity > 0 &&
+      province !== '' &&
+      district !== '' &&
+      deadline !== '';
+  
+    setIsFormValid(isValid);
+  };
+
+  useEffect(() => {
+    validateForm();
+  }, [title, category, description, quantity, province, district, deadline]);
+
   const handleUpload = (e:any) => {
     const file = e.target.files[0];
-  
+
     try {
       const imgRef = ref(imgDB, `Imgs/${v4()}`);
       uploadBytes(imgRef, file).then((snapshot) => {
@@ -46,7 +66,11 @@ const DonationEdit = () => {
     const valRef = collection(teksDB, 'donations');
 
     try {
-      if (donationId) {
+      if (!title || !category || !description || quantity <= 0 || !province || !district || !deadline) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+        if (donationId) {
         const donationDocRef = doc(valRef, donationId);
         await updateDoc(donationDocRef, {
           title: title,
@@ -76,7 +100,7 @@ const DonationEdit = () => {
 
         const newDonationId = newDocRef.id;
         alert('Data added successfully');
-        window.location.href = "/";
+        router.push('/mydonations')
       }
     } catch (error) {
       console.error('Error handling donation:', error);
@@ -147,7 +171,7 @@ const DonationEdit = () => {
     <div className="lg:py-28">
       <form>
         <label htmlFor="image">Image</label>
-        <input type="file" id="image" onChange={handleUpload} />
+        <input type="file" id="image" onChange={handleUpload}/>
         {image && <img src={image} alt="Preview" />}
         <br />
         <br />
@@ -156,14 +180,14 @@ const DonationEdit = () => {
           type="text"
           id="title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => setTitle(e.target.value)} required
         />
         <br />
         <label htmlFor="category">Category</label>
         <select
           id="category"
           value={category}
-          onChange={(e) => setCategory(e.target.value)}>
+          onChange={(e) => setCategory(e.target.value)} required>
           <option value="">Select Category</option>
           <option value="food">Food</option>
           <option value="non-food">Non-Food</option>
@@ -173,14 +197,14 @@ const DonationEdit = () => {
         <textarea
           id="description"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) => setDescription(e.target.value)} required
         />
         <br />
         <label htmlFor="quantity">Quantity</label>
-        <input type="number" name="quantity" id="quantity" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))} />
+        <input type="number" name="quantity" id="quantity" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))} required />
         <br />
         <label htmlFor="province">Province</label>
-        <select id="province" value={province} onChange={handleProvinceChange}>
+        <select id="province" value={province} onChange={handleProvinceChange} required>
           <option value="">Select Province</option>
           {Object.keys(provinceDistrictsData).map((province) => (
             <option key={province} value={province}>
@@ -194,7 +218,7 @@ const DonationEdit = () => {
           id="district"
           value={district}
           onChange={handleDistrictChange}
-          disabled={districtOptions.length === 0}>
+          disabled={districtOptions.length === 0} required>
           <option value="">Select District</option>
           {districtOptions.map((option) => (
             <option key={option} value={option}>
@@ -208,7 +232,7 @@ const DonationEdit = () => {
           type="datetime-local"
           id="deadline"
           value={deadline}
-          onChange={(e) => setDeadline(e.target.value)}
+          onChange={(e) => setDeadline(e.target.value)} required
         />
         <br />
         <button type="button" onClick={handleClick}>
