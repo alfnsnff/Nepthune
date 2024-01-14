@@ -13,6 +13,7 @@ import { provinceDistrictsData } from "../provinceDistrictsData";
 import { useRouter } from "next/navigation";
 
 const DonationDetail = () => {
+  const [username, setUsername] = useState("");
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
@@ -48,6 +49,7 @@ const DonationDetail = () => {
         return;
       }
       const initialCategory = donationToEdit.category || '';
+      setUsername(donationToEdit.username);
       setTitle(donationToEdit.title);
       setCategory(initialCategory);
       setDescription(donationToEdit.description);
@@ -91,6 +93,7 @@ const DonationDetail = () => {
 
   return (
     <div className="lg:py-28">
+        <span>Username Donatur: {username && username.charAt(0).toUpperCase() + username.slice(1)}</span>
     <div>
       {image && <img src={image} alt="Preview" />}
     </div>
