@@ -17,7 +17,7 @@ const ItemsComponent = ({ itemsData }: { itemsData: Items[] }) => {
         <div className="flex justify-between items-center mb-8">
           <SectionTitle subtitle="Product" title="Give Your Waste a Second Chance" paragraph="Choose available items below that are useful to you" />
           <div className='border-black md:block hidden text-md border px-2 rounded-full'>
-            <label htmlFor="categoryFilter" className='font-black md:mr-2 '>Short by</label>
+            <label htmlFor="categoryFilter" className='font-semibold md:mr-2 '>Sort by</label>
             <select
               id="categoryFilter"
               value={selectedCategory || ''}

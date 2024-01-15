@@ -61,9 +61,7 @@ const SingleCard = ({ items }: { items: Items }) => {
               </g>
             </svg>
           </p>
-          <p className="md:text-base text-[8px]" >
-            {category}
-          </p>
+          <p className="md:text-base text-[8px]">{category}</p>
         </div>
         <div className="md:flex hidden flex-col items-start">
           <h1 className="text-gray-800 text-center mt-1" style={{ textTransform: 'capitalize' }}>
