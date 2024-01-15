@@ -69,12 +69,12 @@ const MyDonations = () => {
                 <div className="p-4 flex flex-col">
                   {/* title */}
                   <div className="flex justify-between items-center">
-                    <h1 className=" text-black truncate text-base  md:text-xl">{donation.title}</h1>
-                    <p className="md:text-base text-[8px]">{donation.category}</p>
+                    <h1 className=" text-black truncate text-base  md:text-xl" style={{textTransform: 'capitalize'}}>{donation.title}</h1>
+                    <p className="md:text-base text-[8px]" style={{textTransform: 'capitalize'}}>{donation.category}</p>
                   </div>
                   {/* desc */}
                   <div className="md:flex hidden flex-col items-start">
-                    <p className="text-gray-400 flex flex-row gap-1  truncate justify-center md:text-xs text-[8px]">{donation.description}</p>
+                    <p className="text-gray-400 flex flex-row gap-1  truncate justify-center md:text-xs text-[8px]" style={{textTransform: 'capitalize'}}>{donation.description}</p>
                     <p className="text-gray-400  text-xs text-center">{donation.quantity} item</p>
                     <p className="text-gray-400  text-xs text-center">{donation.province}</p>
                     <p className="text-gray-400  text-xs text-center">{donation.district}</p>
