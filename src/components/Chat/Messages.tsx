@@ -26,7 +26,7 @@ const Messages: React.FC = () => {
 
 
   return (
-    <div className="flex flex-col p-4 gap-2.5 text-md overflow-y-auto no-scrollbar">
+    <div className="flex flex-col justify-end h-full p-4 gap-2.5 text-md overflow-y-auto no-scrollbar">
       {messages.map((m) => (
         <Message message={m} key={m.id} />
       ))}

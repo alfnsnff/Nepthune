@@ -26,7 +26,7 @@ const ChatLists: React.FC = () => {
     const getChats = () => {
       // Check if currentUser is not null before accessing uid
       if (currentUser && currentUser.uid) {
-        const unsub = onSnapshot(
+        const unsubscribe = onSnapshot(
           doc(db, "userChats", currentUser.uid),
           (snapshot: DocumentSnapshot) => {
             setChats(snapshot.data() as Chat);
@@ -34,7 +34,7 @@ const ChatLists: React.FC = () => {
         );
 
         return () => {
-          unsub();
+          unsubscribe();
         };
       }
     };

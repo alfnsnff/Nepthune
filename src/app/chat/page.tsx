@@ -1,6 +1,4 @@
-// "use client"
 import Chat from '@/components/Chat/Chat';
-import Breadcrumb from '@/components/common/Breadcrumb';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
