@@ -26,13 +26,14 @@ const menuData: Menu[] = [
     newTab: false,
   },
   {
-    id: 5,
-    title: "Donate",
+
+    id: 6,
+    title: "Donations",
     path: "/donations",
     newTab: false,
   },
   {
-    id: 6,
+    id: 7,
     title: "Pages",
     newTab: false,
     submenu: [
