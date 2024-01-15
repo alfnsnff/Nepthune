@@ -12,16 +12,17 @@ const ItemsComponent = ({ itemsData }: { itemsData: Items[] }) => {
   );
 
   return (
-    <section className="pb-8 pt-20 px-20 lg:pb-[70px] lg:pt-[120px]">
+    <section className="pb-8 pt-10 px-0 md:px-20 lg:pb-[70px] lg:pt-[80px]">
       <div className="container">
         <div className="flex justify-between items-center mb-8">
           <SectionTitle subtitle="Product" title="Give Your Waste a Second Chance" paragraph="Choose available items below that are useful to you" />
-          <div>
-            <label htmlFor="categoryFilter">Filter by Category:</label>
+          <div className='border-black md:block hidden text-md border px-2 rounded-full'>
+            <label htmlFor="categoryFilter" className='font-black md:mr-2 '>Short by</label>
             <select
               id="categoryFilter"
               value={selectedCategory || ''}
               onChange={(e) => setSelectedCategory(e.target.value || null)}
+              className='bg-white'
             >
               <option value="">All Categories</option>
               <option value="food">Food</option>
@@ -29,7 +30,7 @@ const ItemsComponent = ({ itemsData }: { itemsData: Items[] }) => {
             </select>
           </div>
         </div>
-        <div className="-mx-4 mt-12 flex gap-6 items-center justify-start flex-wrap">
+        <div className="md:mx-0 mt-12 flex md:gap-6 gap-4 items-center justify-start flex-wrap">
           {filteredItems.map((item) => (
             <SingleCard key={item.id} items={item} />
           ))}
