@@ -39,7 +39,7 @@ const Message: React.FC<MessageProps> = ({ message }) => {
         alt=""
       />
       <div
-        className={`flex leading-1.5 p-2 items-end dark:bg-gray-700 drop-shadow-sm ${
+        className={`flex leading-1.5 p-2 items-end text-slate-800 dark:bg-gray-700 drop-shadow-sm ${
           message.senderId === currentUser?.uid && "owner"
             ? "rounded-s-xl rounded-ee-xl bg-green-400"
             : "rounded-e-xl rounded-es-xl bg-white"

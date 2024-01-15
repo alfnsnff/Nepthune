@@ -25,7 +25,9 @@ const Chat = () => {
               <div className="sticky top-0 px-4 py-4 bg-white drop-shadow">
                 <h1>Your Chats</h1>
               </div>
-              <Search />
+              {/* <div className="p-2">
+                <Search />
+              </div> */}
               <Separator />
               <Chats />
             </div>

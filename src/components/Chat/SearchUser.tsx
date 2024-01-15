@@ -96,13 +96,13 @@ const SearchUser: React.FC = () => {
         <div className="">
           <Input
             type="text"
-            placeholder="Find a user"
+            placeholder="Search user here"
             onKeyDown={handleKey}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setUsername(e.target.value)
             }
             value={username}
-            className="rounded-none"
+            // className=""
           />
         </div>
         {err && <span>User not found!</span>}
