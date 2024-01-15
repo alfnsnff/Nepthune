@@ -33,7 +33,6 @@ const DonationsForm = () => {
     handleValidityCheck();
   }, [title, category, description, image, quantity, province, district, deadline]);
 
-
   const handleUpload = (e: any) => {
     const file = e.target.files[0];
 
@@ -52,7 +51,7 @@ const DonationsForm = () => {
   const handleClick = async () => {
     const valRef = collection(teksDB, 'donations');
 
-    if(isFormValid){
+    if (isFormValid) {
       try {
         const newDocRef = await addDoc(valRef, {
           userId: auth.currentUser?.uid,
@@ -66,19 +65,18 @@ const DonationsForm = () => {
           district: district,
           deadline: deadline,
         });
-  
+
         const donationId = newDocRef.id;
-  
+
         alert('Data added successfully');
         router.push('/');
+      } catch (error) {
+        console.error('Error adding document:', error);
       }
-      catch (error) {
-      console.error('Error adding document:', error);
-    } 
-  }else{
-    alert('Please fill in all required fields.');
-  }
-};
+    } else {
+      alert('Please fill in all required fields.');
+    }
+  };
 
   const handleProvinceChange = (e: any) => {
     const selectedProvince = e.target.value;
@@ -108,8 +106,6 @@ const DonationsForm = () => {
     getData();
   }, []);
 
-  
-
   return (
     <section className="min-h-screen flex items-stretch text-white">
       <div
@@ -136,7 +132,7 @@ const DonationsForm = () => {
             <div className="flex flex-col gap-2 justify-start items-start">
               <label htmlFor="image">Image</label>
               <div>
-                <input type="file" id="image" onChange={handleUpload} className="mb-2" required/>
+                <input type="file" id="image" onChange={handleUpload} className="mb-2" required />
                 {image && <img src={image} alt="Preview" />}
               </div>
               <label htmlFor="title">Title</label>
@@ -150,7 +146,7 @@ const DonationsForm = () => {
                 <option value="non-food">Non-Food</option>
               </select>
               <label htmlFor="description">Description</label>
-              <textarea id="description" className="block w-full p-4 text-lg rounded-sm bg-black" value={description} onChange={(e) => setDescription(e.target.value)} required/>
+              <textarea id="description" className="block w-full p-4 text-lg rounded-sm bg-black" value={description} onChange={(e) => setDescription(e.target.value)} required />
               <label htmlFor="quantity">Quantity</label>
               <input className="block w-full p-4 text-lg rounded-sm bg-black" type="number" name="quantity" id="quantity" value={quantity} required onChange={(e) => setQuantity(parseInt(e.target.value))} />
               <label htmlFor="province">Province</label>
