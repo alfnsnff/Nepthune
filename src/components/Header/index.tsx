@@ -2,8 +2,8 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import {auth} from '../../lib/firebase-config'
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from '../../lib/firebase-config';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import menuData from './menuData';
@@ -14,22 +14,24 @@ const Header = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user:any) => {
+    onAuthStateChanged(auth, (user: any) => {
       setUser(user);
     });
   }, []);
 
   // signout
-  const handleLogout = () => {               
-    signOut(auth).then(() => {
-    // Sign-out successful.
-        router.push("/");
-        console.log("Signed out successfully")
-    }).catch((error) => {
-      // error happened
-      console.log(error);
-    });
-}
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        router.push('/');
+        console.log('Signed out successfully');
+      })
+      .catch((error) => {
+        // error happened
+        console.log(error);
+      });
+  };
 
   const pathUrl = usePathname();
   // Navbar toggle
@@ -73,25 +75,24 @@ const Header = () => {
             <div className="w-60 max-w-full px-4">
               <Link href="/" className={`navbar-logo block w-full ${sticky ? 'py-2' : 'py-5'} `}>
                 <Image src={`/images/logo/nephtune.svg`} alt="logo" width={40} height={40} className="header-logo w-40 " />
-                
               </Link>
             </div>
             <div className="flex w-full items-center justify-between px-4">
               <div>
                 <button onClick={navbarToggleHandler} id="navbarToggler" aria-label="Mobile Menu" className="absolute right-4 top-1/2 block -translate-y-1/2 rounded-lg px-3 py-[6px] ring-primary focus:ring-2 lg:hidden">
                   <span
-                    className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${navbarOpen ? ' top-[7px] rotate-45' : ' '} ${pathUrl !== '/' && '!bg-dark dark:!bg-white'} ${
-                      pathUrl === '/' && sticky ? 'bg-dark dark:bg-white' : 'bg-white'
+                    className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${navbarOpen ? ' top-[7px] rotate-45' : ' '} ${pathUrl !== '/' && ' dark:!bg-black'} ${
+                      pathUrl === '/' && sticky ? 'bg-dark dark:bg-white' : 'bg-black'
                     }`}
                   />
                   <span
-                    className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${navbarOpen ? 'opacity-0 ' : ' '} ${pathUrl !== '/' && '!bg-dark dark:!bg-white'} ${
-                      pathUrl === '/' && sticky ? 'bg-dark dark:bg-white' : 'bg-white'
+                    className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${navbarOpen ? 'opacity-0 ' : ' '} ${pathUrl !== '/' && ' dark:!bg-black'} ${
+                      pathUrl === '/' && sticky ? 'bg-dark dark:bg-white' : 'bg-black'
                     }`}
                   />
                   <span
-                    className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${navbarOpen ? ' top-[-8px] -rotate-45' : ' '} ${pathUrl !== '/' && '!bg-dark dark:!bg-white'} ${
-                      pathUrl === '/' && sticky ? 'bg-dark dark:bg-white' : 'bg-white'
+                    className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${navbarOpen ? ' top-[-8px] -rotate-45' : ' '} ${pathUrl !== '/' && ' dark:!bg-black'} ${
+                      pathUrl === '/' && sticky ? 'bg-dark dark:bg-white' : 'bg-black'
                     }`}
                   />
                 </button>
@@ -132,7 +133,7 @@ const Header = () => {
                 </nav>
               </div>
               <div className="hidden items-center justify-end pr-16 sm:flex lg:pr-0">
-              {user ? (
+                {user ? (
                   <>
                     <p className={`loginBtn px-7 py-3 text-base font-medium ${!sticky && pathUrl === '/' ? 'text-dark' : 'text-dark'}`}>{auth.currentUser?.displayName}</p>
                     {pathUrl !== '/' || sticky ? (
@@ -140,26 +141,20 @@ const Header = () => {
                         Sign Out
                       </button>
                     ) : (
-                      <button onClick={handleLogout} className="signUpBtn rounded-lg hover:bg-primary/90 dark:bg-white/10 dark:hover:bg-white/20 bg-opacity-20 px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark">
+                      <button
+                        onClick={handleLogout}
+                        className="signUpBtn rounded-lg hover:bg-primary/90 dark:bg-white/10 dark:hover:bg-white/20 bg-opacity-20 px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark"
+                      >
                         Sign Out
                       </button>
                     )}
                   </>
-                  ) : (
-                    <>
-                      {!user && (
-                        <>
-                          {pathUrl !== '/' ? (
-                            <>
-                              <Link href="/auth/signin" className="px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white">
-                                Sign In
-                              </Link>
-                              <Link href="/auth/signup" className="rounded-lg bg-primary px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-primary/90 dark:bg-white/10 dark:hover:bg-white/20">
-                                Sign Up
-                              </Link>
-                            </>
-                          ) : (
-                            <>
+                ) : (
+                  <>
+                    {!user && (
+                      <>
+                        {pathUrl !== '/' ? (
+                          <>
                             <Link href="/auth/signin" className="px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white">
                               Sign In
                             </Link>
@@ -167,11 +162,20 @@ const Header = () => {
                               Sign Up
                             </Link>
                           </>
-                          )}
-                        </>
-                      )}
-                    </>
-                  )}
+                        ) : (
+                          <>
+                            <Link href="/auth/signin" className="px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white">
+                              Sign In
+                            </Link>
+                            <Link href="/auth/signup" className="rounded-lg bg-primary px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-primary/90 dark:bg-white/10 dark:hover:bg-white/20">
+                              Sign Up
+                            </Link>
+                          </>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </div>
