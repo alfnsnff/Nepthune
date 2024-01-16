@@ -21,18 +21,19 @@ const menuData: Menu[] = [
   },
   {
     id: 5,
-    title: "MyDonations",
+    title: "My Donations",
     path: "/mydonations",
     newTab: false,
   },
   {
-    id: 5,
+
+    id: 6,
     title: "Donations",
     path: "/donations",
     newTab: false,
   },
   {
-    id: 6,
+    id: 7,
     title: "Pages",
     newTab: false,
     submenu: [

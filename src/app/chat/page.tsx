@@ -1,50 +1,16 @@
-"use client";
-import Chatroom from "@/components/chat/ChatRoom";
-import Breadcrumb from "@/components/common/Breadcrumb";
-import Signin from "@/components/Auth/SignIn";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useEffect, useRef, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/lib/firebase-config";
+import Chat from '@/components/Chat/Chat';
+import { Metadata } from 'next';
 
-export default function Home() {
-  const [user, setUser] = useState(null);
+export const metadata: Metadata = {
+  title: 'Sign Up | Play SaaS Starter Kit and Boilerplate for Next.js',
+};
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user:any) => {
-      setUser(user);
-    });
-  }, []);
+const SignupPage = () => {
+  return (
+    <>
+      <Chat/>
+    </>
+  );
+};
 
-  const [room, setRoom] = useState("");
-  const roomInputRef = useRef(null);
-
-  if (!user) {
-    return (
-      <>
-        <Breadcrumb pageName="Discuss" />
-        <Signin />
-      </>
-    );
-  } else {
-    return (
-      <>
-        <Breadcrumb pageName="Discuss" />
-        {room ? (
-          <Chatroom room={room} />
-        ) : (
-          <div className="room mx-24 space-y-2">
-            <label className="px-4">Enter Room Name : </label>
-            <div className="flex space-x-4">
-              <Input ref={roomInputRef} />
-              <Button type="submit" onClick={() => setRoom(roomInputRef.current.value)}>
-                Enter Chat
-              </Button>
-            </div>
-          </div>
-        )}
-      </>
-    );
-  }
-}
+export default SignupPage;
