@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import { SessionProvider } from "next-auth/react";
 import { ChatContextProvider } from "@/context/ChatContext";
+import { AuthContextProvider } from "@/context/AuthContext";
 // import "../styles/prism-vsc-dark-plus.css";
 // import { ThemeProvider } from "next-themes";
 
@@ -18,14 +19,16 @@ export default function RootLayout({
   return (
     <html lang="en" className="!scroll-smooth">
       <body className={inter.className}>
-        <SessionProvider>
-          {/* <ThemeProvider> */}
+        <AuthContextProvider>
+          <SessionProvider>
+            {/* <ThemeProvider> */}
             <ChatContextProvider>
               <Header />
               {children}
             </ChatContextProvider>
-          {/* </ThemeProvider> */}
-        </SessionProvider>
+            {/* </ThemeProvider> */}
+          </SessionProvider>
+        </AuthContextProvider>
       </body>
     </html>
   );

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { ChatContext } from "@/context/ChatContext";
+import { AuthContext } from "@/context/AuthContext";
 import {
   arrayUnion,
   doc,
@@ -14,7 +15,7 @@ import { Input } from "@/components/ui/input";
 const InputForm = () => {
   const [text, setText] = useState("");
 
-  const currentUser = auth.currentUser;
+  const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
   const handleSend = async (e: React.FormEvent) => {

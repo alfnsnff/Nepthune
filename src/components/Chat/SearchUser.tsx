@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, KeyboardEvent } from "react";
+import React, { useState, ChangeEvent, KeyboardEvent, useContext } from "react";
 import { auth, db } from "@/lib/firebase-config";
 import {
   collection,
@@ -12,6 +12,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { Input } from "@/components/ui/input";
+import { AuthContext } from "@/context/AuthContext";
 
 interface User {
   uid: string;
@@ -24,14 +25,15 @@ const SearchUser: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [err, setErr] = useState<boolean>(false);
 
-  const currentUser = auth.currentUser;
+  const { currentUser } = useContext(AuthContext);
 
   const handleSearch = async () => {
     const q = query(
       collection(db, "users"),
-      where("displayName", "==", username)
+      where("displayName", "==", username),
+      where("uid", "!=", currentUser.uid) // Exclude current user
     );
-
+  
     try {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {

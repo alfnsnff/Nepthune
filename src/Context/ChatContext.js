@@ -12,7 +12,7 @@ import {
     const currentUser = auth.currentUser;
     const INITIAL_STATE = {
       chatId: "null",
-      user: {},
+      user: "null",
     };
   
     const chatReducer = (state, action) => {
