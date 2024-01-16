@@ -26,7 +26,7 @@ const SingleCard = ({ items }: { items: Items }) => {
   const formattedDeadline = new Intl.DateTimeFormat('id-ID', options).format(new Date(deadline));
 
   return (
-    <div className="md:w-80 sm:w-60 w-32  bg-white shadow rounded">
+    <div className="lg:w-80 sm:w-60 xs:w-40  w-32 bg-white shadow rounded">
       {' '}
       <div
         className="md:h-48 h-20 w-full bg-gray-200 flex flex-col justify-between md:p-4 bg-cover bg-center"
