@@ -2,7 +2,7 @@ import Chat from '@/components/Chat/Chat';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Sign Up | Play SaaS Starter Kit and Boilerplate for Next.js',
+  title: 'Nepthune | Chat',
 };
 
 const SignupPage = () => {
