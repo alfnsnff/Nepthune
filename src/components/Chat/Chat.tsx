@@ -20,13 +20,12 @@ const Chat = () => {
         </>
       ) : (
         <>
-          <div className="h-[520px] mt-24 m-16 flex flex-col sm:flex-row sm:border sm:drop-shadow">
+          <div className="h-[540px] mt-24 flex flex-col sm:flex-row sm:mt-24 sm:m-16 sm:border sm:drop-shadow">
             {/* Chat List Section (Hidden on Mobile) */}
             <div
               className="hidden flex-col overflow-y-auto no-scrollbar 
                 sm:flex 
                 sm:w-2/5
-                
               sm:bg-white 
                 sm:drop-shadow"
             >
@@ -35,11 +34,6 @@ const Chat = () => {
               </h1>
               <Chats />
             </div>
-
-            {/* Vertical Separator */}
-            {/* <span className="sm:border-r-2"></span> */}
-
-            {/* Chat Messages Section */}
             <div className="w-full bg-gray-50 flex flex-col h-full">
               {data.chatId === "null" ? (
                 <div className="flex flex-col h-full justify-center items-center border text-slate-800 gap-2 p-4">
@@ -52,13 +46,6 @@ const Chat = () => {
                 </div>
               ) : (
                 <>
-                  {/* <div className="px-4 py-4 bg-white font-bold">
-                    {data.user?.displayName}
-                  </div>
-                  <div className="flex-1 overflow-y-auto no-scrollbar">
-                    <Messages />
-                  </div>
-                  <Input /> */}
                   <div className="w-full border bg-gray-50 h-full flex flex-col">
                     <div className="px-4 py-4 bg-white border-b">
                       {data.user?.displayName}

@@ -11,7 +11,7 @@ import { auth, db } from "@/lib/firebase-config";
 
 interface Chat {
   [key: string]: {
-    date: Date;
+    date: any;
     lastMessage?: {
       text: string;
     };
@@ -62,12 +62,20 @@ const ChatLists: React.FC = () => {
               src={chat[1]?.userInfo.photoURL}
               alt=""
             />
-            <div className="">
+            <div className="grow truncate">
               <span className="font-semibold ">
                 {chat[1]?.userInfo.displayName}
               </span>
-              <p className="text-gray-500">{chat[1]?.lastMessage?.text}</p>
+              <p className="text-gray-500 truncate">
+                {chat[1]?.lastMessage?.text}
+              </p>
             </div>
+            <span className="pt-2.5 text-nowrap self-start text-xs/[1px] font-normal">
+              {new Date(chat[1]?.date.toDate()).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </span>
           </div>
         ))}
     </>
