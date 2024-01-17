@@ -21,6 +21,53 @@ const Message: React.FC<MessageProps> = ({ message }) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
 
+  const isLink = (text: string) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return urlRegex.test(text);
+  };
+
+  const renderMessageContent = (text: string) => {
+    if (isLink(text)) {
+      return (
+        // <a
+        //   href={text}
+        //   target="_blank"
+        //   rel="noopener noreferrer"
+        //   className={`flex leading-1.5 p-2 items-end text-slate-800 dark:bg-gray-700 drop-shadow-sm ${
+        //     message.senderId === currentUser?.uid && "owner"
+        //       ? "rounded-s-xl rounded-ee-xl bg-green-400"
+        //       : "rounded-e-xl rounded-es-xl bg-white"
+        //   }`}
+        // >
+        //   {text}
+        // </a>
+        <div
+          className={`flex leading-1.5 p-2 items-end text-slate-800 dark:bg-gray-700 drop-shadow-sm ${
+            message.senderId === currentUser?.uid && "owner"
+              ? "rounded-s-xl rounded-ee-xl bg-green-400"
+              : "rounded-e-xl rounded-es-xl bg-white"
+          }`}
+        >
+          <a href={text} target="_blank" rel="noopener noreferrer" className="text-blue-600">
+            {text}
+          </a>
+        </div>
+      );
+    } else {
+      return (
+        <div
+          className={`flex leading-1.5 p-2 items-end text-slate-800 dark:bg-gray-700 drop-shadow-sm ${
+            message.senderId === currentUser?.uid && "owner"
+              ? "rounded-s-xl rounded-ee-xl bg-green-400"
+              : "rounded-e-xl rounded-es-xl bg-white"
+          }`}
+        >
+          <p>{text}</p>
+        </div>
+      );
+    }
+  };
+
   return (
     <div
       ref={ref}
@@ -39,15 +86,7 @@ const Message: React.FC<MessageProps> = ({ message }) => {
         }
         alt=""
       />
-      <div
-        className={`flex leading-1.5 p-2 items-end text-slate-800 dark:bg-gray-700 drop-shadow-sm ${
-          message.senderId === currentUser?.uid && "owner"
-            ? "rounded-s-xl rounded-ee-xl bg-green-400"
-            : "rounded-e-xl rounded-es-xl bg-white"
-        }`}
-      >
-        <p>{message.text}</p>
-      </div>
+      {renderMessageContent(message.text)}
     </div>
   );
 };
