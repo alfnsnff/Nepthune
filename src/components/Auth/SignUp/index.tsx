@@ -36,7 +36,6 @@ const SignUp = () => {
           });
           await setDoc(doc(db, "userChats", user.uid), {});
         }
-        console.log("User document created in Firestore");
         router.push("/");
       }
     } catch (err) {
@@ -73,7 +72,6 @@ const SignUp = () => {
           });
           await setDoc(doc(db, "userChats", user.uid), {});
         }
-        console.log("User document created in Firestore");
         router.push("/");
       } else {
         console.error("User is not authenticated");

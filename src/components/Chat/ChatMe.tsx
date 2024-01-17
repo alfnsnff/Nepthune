@@ -40,11 +40,12 @@ const ChatMe: React.FC<TargetUserProps> = ({ targetUser }) => {
       querySnapshot.forEach((doc) => {
         setUser(doc.data() as User);
       });
-
+      
       if (!currentUser || !user) {
         return;
       }
-
+      
+      console.log("Executed");
       const combinedId =
         currentUser.uid > user.uid
           ? currentUser.uid + user.uid

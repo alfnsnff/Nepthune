@@ -14,6 +14,7 @@ interface Chat {
     date: any;
     lastMessage?: {
       text: string;
+      date: any;
     };
     userInfo: {
       displayName: string;
@@ -71,7 +72,7 @@ const ChatLists: React.FC = () => {
               </p>
             </div>
             <span className="pt-2.5 text-nowrap self-start text-xs/[1px] font-normal">
-              {new Date(chat[1]?.date.toDate()).toLocaleTimeString([], {
+              {new Date(chat[1]?.lastMessage?.date.toDate()).toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
               })}

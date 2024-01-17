@@ -35,6 +35,7 @@ const InputForm = () => {
       await updateDoc(doc(db, "userChats", currentUser.uid), {
         [data.chatId + ".lastMessage"]: {
           text,
+          date: Timestamp.now(),
         },
         [data.chatId + ".date"]: serverTimestamp(),
       });
@@ -44,6 +45,7 @@ const InputForm = () => {
         await updateDoc(doc(db, "userChats", data.user.uid), {
           [data.chatId + ".lastMessage"]: {
             text,
+            date: Timestamp.now(),
           },
           [data.chatId + ".date"]: serverTimestamp(),
         });
