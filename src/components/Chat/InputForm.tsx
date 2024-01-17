@@ -20,7 +20,7 @@ const InputForm = () => {
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     // Ensure currentUser is not null before accessing uid
     if (currentUser) {
       await updateDoc(doc(db, "chats", data.chatId), {
@@ -31,7 +31,7 @@ const InputForm = () => {
           date: Timestamp.now(),
         }),
       });
-  
+
       await updateDoc(doc(db, "userChats", currentUser.uid), {
         [data.chatId + ".lastMessage"]: {
           text,
@@ -39,7 +39,7 @@ const InputForm = () => {
         },
         [data.chatId + ".date"]: serverTimestamp(),
       });
-  
+
       // Ensure data.user is not null before accessing uid
       if (data.user) {
         await updateDoc(doc(db, "userChats", data.user.uid), {
@@ -50,15 +50,20 @@ const InputForm = () => {
           [data.chatId + ".date"]: serverTimestamp(),
         });
       }
-  
+
       setText("");
     }
   };
-  
+
   return (
     <>
-      <form onSubmit={handleSend} className="flex p-2 rounded-lg bg-gray-50 dark:bg-gray-700">
+      <form
+        onSubmit={handleSend}
+        className="flex p-2 rounded-lg bg-gray-50 dark:bg-gray-700"
+      >
         <Input
+          id="messageInput" // Add a unique id attribute
+          name="message" // Add a name attribute
           placeholder="Type your message here.."
           onChange={(e) => setText(e.target.value)}
           value={text}
