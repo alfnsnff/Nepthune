@@ -1,6 +1,7 @@
 import { auth } from "@/lib/firebase-config";
 import React, { useContext, useEffect, useRef } from "react";
 import { ChatContext } from "@/context/ChatContext";
+import { AuthContext } from "@/context/AuthContext";
 
 interface MessageProps {
   message: {
@@ -11,7 +12,7 @@ interface MessageProps {
 }
 
 const Message: React.FC<MessageProps> = ({ message }) => {
-  const currentUser = auth.currentUser;
+  const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
   const ref = useRef<HTMLDivElement>(null);

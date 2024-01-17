@@ -31,7 +31,7 @@ const SignUp = () => {
             uid: user.uid,
             displayName: user.displayName || "", // Use Google display name if available
             email: user.email || "",
-            photoURL: "",
+            photoURL: user.photoURL || "",
             // Add any additional information you want to store
           });
           await setDoc(doc(db, "userChats", user.uid), {});
@@ -68,7 +68,7 @@ const SignUp = () => {
             uid: user.uid,
             displayName: user.displayName || "", // Use Google display name if available
             email: user.email || "",
-            photoURL: user.photoURL,
+            photoURL: user.photoURL || "",
             // Add any additional information you want to store
           });
           await setDoc(doc(db, "userChats", user.uid), {});

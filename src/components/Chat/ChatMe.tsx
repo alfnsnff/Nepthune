@@ -14,6 +14,7 @@ import {
 } from "firebase/firestore";
 import { AuthContext } from "@/context/AuthContext";
 import { db } from "@/lib/firebase-config";
+import { Button } from "@/components/ui/button";
 
 interface User {
   uid: string;
@@ -51,7 +52,6 @@ const ChatMe: React.FC<TargetUserProps> = ({ targetUser }) => {
 
       try {
         const res = await getDoc(doc(db, "chats", combinedId));
-
         if (!res.exists()) {
           await setDoc(doc(db, "chats", combinedId), { messages: [] });
 
@@ -77,6 +77,7 @@ const ChatMe: React.FC<TargetUserProps> = ({ targetUser }) => {
         console.error("Error creating or updating documents:", err);
       }
     } catch (err) {
+      console.error("Error creating or updating documents:", err);
       setErr(true);
     }
     // Redirect to the chat page
@@ -84,12 +85,12 @@ const ChatMe: React.FC<TargetUserProps> = ({ targetUser }) => {
   };
 
   return (
-    <button
-      className="flex justify-center h-full rounded-lg border border-gray-700 p-4 hover:border-pink-600"
+    <Button
+      className="flex justify-center text-slate-800 bg-transparent w-full h-full rounded-lg border border-gray-700 p-4 hover:bg-gray-50 hover:border-pink-600"
       onClick={handleTest}
     >
       Text Me
-    </button>
+    </Button>
   );
 };
 
