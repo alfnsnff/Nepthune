@@ -94,7 +94,7 @@ export const metadata: Metadata = {
                 <h1 className="mb-6 text-3xl font-bold leading-snug text-[#19394e] sm:text-4xl sm:leading-snug lg:text-5xl lg:leading-[1.2]">Share More. Waste Less.</h1>
                 <p className="mx-auto mb-4 max-w-[600px] text-base font-medium text-white sm:text-lg sm:leading-[1.44]">Sharing App and Donation</p>
                 <div className="group relative bg-white/[0.12] mb-4 inline-block overflow-hidden rounded px-4 py-0 font-medium text-sm text-black">
-                  <span className="absolute left-0 top-0 mb-0 flex h-0 w-full translate-y-0 transform bg-purple-600 opacity-90 transition-all duration-200 ease-out group-hover:h-full"></span>
+                  <span className="absolute left-0 top-0 mb-0 flex h-0 w-full translate-y-0 transform bg-[#49adaeff] opacity-90 transition-all duration-200 ease-out group-hover:h-full"></span>
                   <span className="relative gap-2 flex flex-row items-center justify-center group-hover:text-white">
                     Feature
                     <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transform: 'rotate(90deg)' }}>

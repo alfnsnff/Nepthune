@@ -170,7 +170,7 @@ const DonationDetail = () => {
         <button
           type="button"
           onClick={() => router.push('/')}
-          className="inline-flex items-center justify-center w-full gap-2 px-6 py-3 mb-2 text-lg text-white bg-green-500 rounded-md hover:bg-green-400 sm:w-auto sm:mb-0"
+          className="inline-flex items-center justify-center w-full gap-2 px-6 py-3 mb-2 text-lg text-white bg-[#49adaeff] rounded-md hover:bg-[#49adaeff] sm:w-auto sm:mb-0"
           data-primary="green-400"
           data-rounded="rounded-2xl"
           data-primary-reset="{}"

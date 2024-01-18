@@ -74,7 +74,7 @@ const Header = () => {
           <div className="relative -mx-4 flex items-center justify-between">
             <div className="w-60 max-w-full px-4">
               <Link href="/" className={`navbar-logo block w-full ${sticky ? 'py-2' : 'py-5'} `}>
-                <Image src={`/images/logo/nephtune.svg`} alt="logo" width={40} height={40} className="header-logo w-40 " />
+                <Image src={`/images/logo/nepthuneLogo.svg`} alt="logo" width={40} height={40} className="header-logo w-40 " />
               </Link>
             </div>
             <div className="flex w-full items-center justify-between px-4">
@@ -137,13 +137,13 @@ const Header = () => {
                   <>
                     <p className={`loginBtn px-7 py-3 text-base font-medium ${!sticky && pathUrl === '/' ? 'text-dark' : 'text-dark'}`}>{auth.currentUser?.displayName}</p>
                     {pathUrl !== '/' || sticky ? (
-                      <button onClick={handleLogout} className="signUpBtn hover:opacity-70 rounded-lg bg-primary bg-opacity-100 px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-20 hover:text-dark">
+                      <button onClick={handleLogout} className="signUpBtn hover:opacity-70 rounded-lg bg-[#49adaeff]  px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-20 hover:text-dark">
                         Sign Out
                       </button>
                     ) : (
                       <button
                         onClick={handleLogout}
-                        className="signUpBtn rounded-lg hover:bg-primary/90 hover:opacity-70 dark:bg-white/10 dark:hover:bg-white/20 bg-opacity-20 px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark"
+                        className="signUpBtn rounded-lg hover:bg-[#49adaeff]/90 hover:opacity-70 bg-[#49adaeff] dark:hover:bg-white/20 bg-opacity-20 px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark"
                       >
                         Sign Out
                       </button>

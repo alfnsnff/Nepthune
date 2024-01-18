@@ -77,7 +77,7 @@ const SingleCard = ({ items }: { items: Items }) => {
           <div className="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover:bg-gray-100 inline-flex items-center px-4 py-1 select-none">Available {total} </div>{' '}
         </div>
         {/* btn & btnLink */}
-        <Link href={btnLink} className="py-2 md:px-4 px-2 md:text-base text-xs  bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 md:mt-4 mt-1 w-full flex items-center justify-center">
+        <Link href={btnLink} className="py-2 md:px-4 px-2 md:text-base text-xs  bg-[#49adaeff] text-white rounded hover:bg-black active:bg-black disabled:opacity-50 md:mt-4 mt-1 w-full flex items-center justify-center">
           {' '}
           {btn}{' '}
         </Link>
