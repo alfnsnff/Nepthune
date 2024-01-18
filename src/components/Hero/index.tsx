@@ -26,7 +26,7 @@
 
       const handleDonateClick = () => {
         if (auth.currentUser) {
-          router.push('/donations');
+          router.push('/donate');
         } else {
           router.push('/auth/signin');
         }
