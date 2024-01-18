@@ -1,7 +1,8 @@
 export type Items = {
     id: string;
-    img: string; //karena yang diterima itu link/url
+    img: string;
     user: string;
+    userId: string;
     title: string;
     category: string;
     province: string;

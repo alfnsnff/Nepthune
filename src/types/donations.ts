@@ -1,7 +1,7 @@
 export type DonationData = {
   id: string;
   username: string;
-  userId: any;
+  userId: string;
   category: string;
   description: string;
   imageURL: string;
@@ -10,4 +10,5 @@ export type DonationData = {
   province: string;
   district: string;
   deadline: string;
+  status: string;
 };
