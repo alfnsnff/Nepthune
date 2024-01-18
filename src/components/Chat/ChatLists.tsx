@@ -59,8 +59,9 @@ const ChatLists: React.FC = () => {
             onClick={() => handleSelect(chat[1]?.userInfo)}
           >
             <img
+              onClick={() => console.log(chat[1]?.userInfo.photoURL)}
               className="size-12 rounded-full "
-              src={chat[1]?.userInfo.photoURL}
+              // src={chat[1]?.userInfo.photoURL}
               alt=""
             />
             <div className="grow truncate">
