@@ -82,17 +82,17 @@ const Header = () => {
                 <button onClick={navbarToggleHandler} id="navbarToggler" aria-label="Mobile Menu" className="absolute right-4 top-1/2 block -translate-y-1/2 rounded-lg px-3 py-[6px] ring-primary focus:ring-2 lg:hidden">
                   <span
                     className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${navbarOpen ? ' top-[7px] rotate-45' : ' '} ${pathUrl !== '/' && ' dark:!bg-black'} ${
-                      pathUrl === '/' && sticky ? 'bg-dark dark:bg-white' : 'bg-black'
+                      pathUrl === '/' && sticky ? 'bg-black dark:bg-white' : 'bg-black'
                     }`}
                   />
                   <span
                     className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${navbarOpen ? 'opacity-0 ' : ' '} ${pathUrl !== '/' && ' dark:!bg-black'} ${
-                      pathUrl === '/' && sticky ? 'bg-dark dark:bg-white' : 'bg-black'
+                      pathUrl === '/' && sticky ? 'bg-black dark:bg-white' : 'bg-black'
                     }`}
                   />
                   <span
                     className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${navbarOpen ? ' top-[-8px] -rotate-45' : ' '} ${pathUrl !== '/' && ' dark:!bg-black'} ${
-                      pathUrl === '/' && sticky ? 'bg-dark dark:bg-white' : 'bg-black'
+                      pathUrl === '/' && sticky ? 'bg-black dark:bg-white' : 'bg-black'
                     }`}
                   />
                 </button>
@@ -126,13 +126,13 @@ const Header = () => {
                             </Link>
                           )}
                         </li>
-                      ) : // Bagian yang dihapus
+                      ) : 
                       null
                     )}
                   </ul>
                 </nav>
               </div>
-              <div className="hidden items-center justify-end pr-16 sm:flex lg:pr-0">
+              <div className=" items-center justify-end pr-16 flex lg:pr-0">
                 {user ? (
                   <>
                     <p className={`loginBtn px-7 py-3 text-base font-medium ${!sticky && pathUrl === '/' ? 'text-dark' : 'text-dark'}`}>{auth.currentUser?.displayName}</p>
