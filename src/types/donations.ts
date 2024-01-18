@@ -10,4 +10,5 @@ export type DonationData = {
   province: string;
   district: string;
   deadline: string;
+  status: string;
 };

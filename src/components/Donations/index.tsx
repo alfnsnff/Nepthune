@@ -5,7 +5,7 @@ import { auth, imgDB, teksDB } from '../../lib/firebase-config';
 import { v4 } from 'uuid';
 import { useRouter } from 'next/navigation';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-
+import Image from 'next/image';
 import { DonationData } from '../../types/donations';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { provinceDistrictsData } from './provinceDistrictsData';
@@ -151,6 +151,7 @@ const DonationsForm = () => {
               <label htmlFor="quantity">Quantity</label>
               <input className="block w-full p-4 text-lg rounded-sm bg-black" type="number" name="quantity" id="quantity" value={quantity} required onChange={(e) => setQuantity(parseInt(e.target.value))} />
               <label htmlFor="province">Province</label>
+
               <select className="block w-full p-4 text-lg rounded-sm bg-black" id="province" value={province} onChange={handleProvinceChange} required>
                 <option value="">Select Province</option>
                 {Object.keys(provinceDistrictsData).map((province) => (
@@ -164,12 +165,15 @@ const DonationsForm = () => {
                 <option value="">Select District</option>
                 {districtOptions.map((option) => (
                   <option key={option} value={option}>
-                    {option}
+                    {option}{' '}
                   </option>
                 ))}
               </select>
               <label htmlFor="deadline">Available Until:</label>
-              <input className="block w-full p-4 text-lg rounded-sm mb-2 bg-black" required type="datetime-local" id="deadline" value={deadline} onChange={(e) => setDeadline(e.target.value)} />
+              <div className='flex justify-center w-full'>
+                <input className="block w-full p-4 text-lg rounded-sm mb-2 bg-black" required type="datetime-local" id="deadline" value={deadline} onChange={(e) => setDeadline(e.target.value)}/>
+                <Image src="/Images/donation.svg" alt="Rotated SVG" width={20} height={20} />
+              </div>
               <button
                 type="button"
                 onClick={handleClick}
