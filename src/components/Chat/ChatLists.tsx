@@ -2,12 +2,12 @@ import {
   doc,
   onSnapshot,
   DocumentSnapshot,
-  collection,
 } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { ChatContext } from "@/context/ChatContext";
 import { AuthContext } from "@/context/AuthContext";
-import { auth, db } from "@/lib/firebase-config";
+import { db } from "@/lib/firebase-config";
+import Image from "next/image";
 
 interface Chat {
   [key: string]: {
@@ -26,7 +26,6 @@ interface Chat {
 
 const ChatLists: React.FC = () => {
   const [chats, setChats] = useState<Chat | null>(null);
-  const chatsCollection = collection(db, "userChats");
   const { dispatch } = useContext(ChatContext);
   const { currentUser } = useContext(AuthContext);
 
@@ -38,11 +37,12 @@ const ChatLists: React.FC = () => {
           setChats(snapshot.data() as Chat | null);
         }
       );
+
       return () => {
         unsubscribe();
       };
     }
-  }, [currentUser?.uid]);
+  }, [currentUser]);
 
   const handleSelect = (u: any) => {
     dispatch({ type: "CHANGE_USER", payload: u });
@@ -59,10 +59,11 @@ const ChatLists: React.FC = () => {
             onClick={() => handleSelect(chat[1]?.userInfo)}
           >
             <img
-              onClick={() => console.log(chat[1]?.userInfo.photoURL)}
-              className="size-12 rounded-full "
-              // src={chat[1]?.userInfo.photoURL}
+              className="size-12 rounded-full"
+              src={chat[1]?.userInfo.photoURL}
               alt=""
+              width={100} // set the width as a number (percentage)
+              height={100} // set the height as a number (percentage)
             />
             <div className="grow truncate">
               <span className="font-semibold ">
