@@ -31,7 +31,6 @@ const Signin = () => {
             // Add any additional information you want to store
           });
         }
-        console.log("User document created in Firestore");
         router.push("/");
       }
     } catch (err) {
