@@ -194,8 +194,8 @@ const SingleCard = ({ items }: { items: Items }) => {
           <p className="md:text-base text-[8px]" style={{ textTransform: 'capitalize' }}>{category}</p>
         </div>
         <div className="md:flex hidden flex-col items-start">
-          <h1 className="text-gray-800 text-center mt-1">
-            {title && title.charAt(0).toUpperCase() + title.slice(1)}
+          <h1 className="text-gray-800 text-center mt-1" style={{ textTransform: 'capitalize' }}>
+            {title}
           </h1>
           <p className="text-gray-400  text-xs text-center">{province}</p>
           <p className="text-gray-400  text-xs text-center">{district}</p>
