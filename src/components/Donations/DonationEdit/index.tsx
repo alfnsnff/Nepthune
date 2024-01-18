@@ -45,7 +45,8 @@ const DonationEdit = () => {
 
   useEffect(() => {
     validateForm();
-  }, [title, category, description, quantity, province, district, deadline]);
+  }, [title, category, description, quantity, province, district, deadline, validateForm]);
+  
 
   const handleUpload = (e:any) => {
     const file = e.target.files[0];

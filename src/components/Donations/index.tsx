@@ -31,7 +31,8 @@ const DonationsForm = () => {
 
   useEffect(() => {
     handleValidityCheck();
-  }, [title, category, description, image, quantity, province, district, deadline]);
+  }, [title, category, description, image, quantity, province, district, deadline, handleValidityCheck]);
+  
 
   const handleUpload = (e: any) => {
     const file = e.target.files[0];
