@@ -12,7 +12,7 @@ import { provinceDistrictsData } from './provinceDistrictsData';
 
 const DonationsForm = () => {
   const router = useRouter();
-  const [title, setTitle] = useState(''); // Memastikan tipe data string pada useState
+  const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
@@ -22,11 +22,20 @@ const DonationsForm = () => {
   const [deadline, setDeadline] = useState<string>('');
   const [districtOptions, setDistrictOptions] = useState<string[]>([]);
   const [data, setData] = useState<DonationData[]>([]);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  const handleValidityCheck = () => {
+    const isValid = title !== '' && category !== '' && description !== '' && image !== '' && quantity > 0 && province !== '' && district !== '' && deadline !== '';
+    setIsFormValid(isValid);
+  };
+
+  useEffect(() => {
+    handleValidityCheck();
+  }, [title, category, description, image, quantity, province, district, deadline]);
 
   const handleUpload = (e: any) => {
     const file = e.target.files[0];
 
-    // Menggunakan try-catch untuk menangani error dengan lebih baik
     try {
       const imgRef = ref(imgDB, `Imgs/${v4()}`);
       uploadBytes(imgRef, file).then((snapshot) => {
@@ -42,26 +51,30 @@ const DonationsForm = () => {
   const handleClick = async () => {
     const valRef = collection(teksDB, 'donations');
 
-    try {
-      const newDocRef = await addDoc(valRef, {
-        userId: auth.currentUser?.uid,
-        username: auth.currentUser?.displayName,
-        title: title,
-        category: category,
-        description: description,
-        imageURL: image,
-        quantity: quantity,
-        province: province,
-        district: district,
-        deadline: deadline,
-      });
+    if (isFormValid) {
+      try {
+        const newDocRef = await addDoc(valRef, {
+          userId: auth.currentUser?.uid,
+          username: auth.currentUser?.displayName,
+          title: title,
+          category: category,
+          description: description,
+          imageURL: image,
+          quantity: quantity,
+          province: province,
+          district: district,
+          deadline: deadline,
+        });
 
-      const donationId = newDocRef.id;
+        const donationId = newDocRef.id;
 
-      alert('Data added successfully');
-      router.push('/');
-    } catch (error) {
-      console.error('Error adding document:', error);
+        alert('Data added successfully');
+        router.push('/');
+      } catch (error) {
+        console.error('Error adding document:', error);
+      }
+    } else {
+      alert('Please fill in all required fields.');
     }
   };
 
@@ -114,33 +127,30 @@ const DonationsForm = () => {
       </div>
 
       <div className="lg:w-1/2 w-full h-full flex-col flex items-center justify-center text-center md:px-16 px-0 z-0 bg-[#161616]">
-        {/* <div className="absolute lg:hidden z-10 inset-0 bg-gray-500 bg-no-repeat bg-cover items-center">
-          <div className="absolute bg-black opacity-60 inset-0 z-0"></div>
-        </div> */}
         <div className="w-full md:px-0 px-4 py-20 z-20 ">
           <form>
             <div className="flex flex-col gap-2 justify-start items-start">
               <label htmlFor="image">Image</label>
               <div>
-                <input type="file" id="image" onChange={handleUpload} className="mb-2" />
+                <input type="file" id="image" onChange={handleUpload} className="mb-2" required />
                 {image && <img src={image} alt="Preview" />}
               </div>
               <label htmlFor="title">Title</label>
               <div>
-                <input className="block w-full p-4 text-lg rounded-sm bg-black" type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                <input className="block w-full p-4 text-lg rounded-sm bg-black" type="text" id="title" value={title} onChange={(e) => setTitle(e.target.value)} required />
               </div>
               <label htmlFor="category">Category</label>
-              <select id="category" className="block w-full p-4 text-lg rounded-sm bg-black" value={category} onChange={(e) => setCategory(e.target.value)}>
+              <select id="category" className="block w-full p-4 text-lg rounded-sm bg-black" value={category} onChange={(e) => setCategory(e.target.value)} required>
                 <option value="">Select Category</option>
                 <option value="food">Food</option>
                 <option value="non-food">Non-Food</option>
               </select>
               <label htmlFor="description">Description</label>
-              <textarea id="description" className="block w-full p-4 text-lg rounded-sm bg-black" value={description} onChange={(e) => setDescription(e.target.value)} />
+              <textarea id="description" className="block w-full p-4 text-lg rounded-sm bg-black" value={description} onChange={(e) => setDescription(e.target.value)} required />
               <label htmlFor="quantity">Quantity</label>
-              <input className="block w-full p-4 text-lg rounded-sm bg-black" type="number" name="quantity" id="quantity" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))} />
+              <input className="block w-full p-4 text-lg rounded-sm bg-black" type="number" name="quantity" id="quantity" value={quantity} required onChange={(e) => setQuantity(parseInt(e.target.value))} />
               <label htmlFor="province">Province</label>
-              <select className="block w-full p-4 text-lg rounded-sm bg-black" id="province" value={province} onChange={handleProvinceChange}>
+              <select className="block w-full p-4 text-lg rounded-sm bg-black" id="province" value={province} onChange={handleProvinceChange} required>
                 <option value="">Select Province</option>
                 {Object.keys(provinceDistrictsData).map((province) => (
                   <option key={province} value={province}>
@@ -149,7 +159,7 @@ const DonationsForm = () => {
                 ))}
               </select>
               <label htmlFor="district">District</label>
-              <select className="block w-full p-4 text-lg rounded-sm bg-black" id="district" value={district} onChange={handleDistrictChange} disabled={districtOptions.length === 0}>
+              <select className="block w-full p-4 text-lg rounded-sm bg-black" id="district" value={district} onChange={handleDistrictChange} disabled={districtOptions.length === 0} required>
                 <option value="">Select District</option>
                 {districtOptions.map((option) => (
                   <option key={option} value={option}>
@@ -158,7 +168,7 @@ const DonationsForm = () => {
                 ))}
               </select>
               <label htmlFor="deadline">Available Until:</label>
-              <input className="block w-full p-4 text-lg rounded-sm mb-2 bg-black" type="datetime-local" id="deadline" value={deadline} onChange={(e) => setDeadline(e.target.value)} />
+              <input className="block w-full p-4 text-lg rounded-sm mb-2 bg-black" required type="datetime-local" id="deadline" value={deadline} onChange={(e) => setDeadline(e.target.value)} />
               <button
                 type="button"
                 onClick={handleClick}
