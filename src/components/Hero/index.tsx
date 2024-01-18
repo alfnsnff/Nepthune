@@ -152,6 +152,7 @@
             id: donation.id,
             img: donation.imageURL, 
             user: donation.username,
+            userId: donation.userId,
             title: donation.title, 
             category: donation.category,
             total: donation.quantity, 

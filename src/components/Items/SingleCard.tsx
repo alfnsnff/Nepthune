@@ -8,7 +8,7 @@ import { addDoc, collection, getDocs, query, where} from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 const SingleCard = ({ items }: { items: Items }) => {
-  const { id, img, user, title, category, province, district, deadline, total, btn, btnLink } = items;
+  const { id, img, user, userId, title, category, province, district, deadline, total, btn, btnLink } = items;
   const [requestStatus, setRequestStatus] = useState<string | null>(null);
   const [btnTakeLabel, setBtnTakeLabel] = useState<string>();
 
@@ -16,6 +16,16 @@ const SingleCard = ({ items }: { items: Items }) => {
     const checkAcceptedRequest = async () => {
       try {
         const auth = getAuth();
+        const currentUserID = auth.currentUser?.uid;
+        console.log("currentUserID: " + currentUserID);
+
+
+        if (currentUserID === items.userId) {
+          setBtnTakeLabel('Your Donation');
+          console.log("userID: " + items.userId)
+          return;
+        }
+
         const existingAcceptedRequestQuery = query(
           collection(db, 'requests'),
           where('donationId', '==', id),
@@ -49,14 +59,13 @@ const SingleCard = ({ items }: { items: Items }) => {
     };
   
     checkAcceptedRequest();
-  }, [id]);
+  }, [id, items.user]);
   
   
   const handleTakeButtonClick = async () => {
     try {
       const auth = getAuth();
   
-      // Check if there is an existing accepted request
       const existingAcceptedRequestQuery = query(
         collection(db, 'requests'),
         where('donationId', '==', id),
@@ -147,13 +156,11 @@ const SingleCard = ({ items }: { items: Items }) => {
       {' '}
       <div
         className="md:h-48 h-20 w-full bg-gray-200 flex flex-col justify-between md:p-4 bg-cover bg-center"
-        //imgg
         style={{ backgroundImage: `url('${img}')` }}
       >
         {' '}
       </div>{' '}
       <div className="p-4 flex flex-col">
-        {/* title */}
         <div className="flex justify-between">
           <p className="text-gray-400 flex flex-row gap-1  truncate justify-center md:text-xs text-[8px]" style={{ textTransform: 'capitalize' }}>
             {user}{' '}
@@ -184,7 +191,6 @@ const SingleCard = ({ items }: { items: Items }) => {
           <h1 className="text-gray-800 text-center mt-1" style={{ textTransform: 'capitalize' }}>
             {title}
           </h1>
-          {/* location */}
           <p className="text-gray-400  text-xs text-center">{province}</p>
           <p className="text-gray-400  text-xs text-center">{district}</p>
           {isDonationAvailable(deadline) ? <p className="text-gray-400  text-xs text-center">Available until: {formattedDeadline}</p> : <p className="text-red-700  text-xs text-center">Donation has expired</p>}
@@ -198,11 +204,13 @@ const SingleCard = ({ items }: { items: Items }) => {
           {btn}{' '}
         </Link>
         <button
-          type="button"
-          onClick={handleTakeButtonClick}
-          className={`py-2 md:px-4 px-2 md:text-base text-xs w-full flex items-center justify-center rounded ${btnTakeLabel === 'Accepted' ? 'bg-green-500 text-white hover:bg-green-600 active:bg-green-700' : (btnTakeLabel === 'Rejected' ? 'bg-red-500 text-white hover:bg-red-600 active:bg-red-700' : 'bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50')} md:mt-4 mt-1`}>
-          {btnTakeLabel}
-        </button>
+        type="button"
+        onClick={handleTakeButtonClick}
+        className={`py-2 md:px-4 px-2 md:text-base text-xs w-full flex items-center justify-center rounded ${btnTakeLabel === 'Your Donation' ? 'bg-gray-500 text-white cursor-not-allowed' : (btnTakeLabel === 'Accepted' ? 'bg-green-500 text-white hover:bg-green-600 active:bg-green-700' : (btnTakeLabel === 'Rejected' ? 'bg-red-500 text-white hover:bg-red-600 active:bg-red-700' : 'bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50'))} md:mt-4 mt-1`}
+        disabled={btnTakeLabel === 'Your Donation'}
+      >
+        {btnTakeLabel}
+      </button>
       </div>
     </div>
   );
