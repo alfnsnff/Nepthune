@@ -68,8 +68,7 @@ const Header = () => {
       <header
         className={`ud-header left-0 top-0 z-40 flex w-full bg-white items-center ${
           sticky ? 'shadow-nav fixed z-[9999] border-b border-stroke bg-white/80 backdrop-blur-[5px] transition dark:border-dark-3/20 dark:bg-dark/10' : 'absolute bg-white'
-        }`}
-      >
+        }`}>
         <div className="container">
           <div className="relative -mx-4 flex items-center justify-between">
             <div className="w-60 max-w-full px-4">
