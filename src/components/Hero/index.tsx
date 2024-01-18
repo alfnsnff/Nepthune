@@ -21,10 +21,7 @@
     const Hero = () => {
       const router = useRouter();
       const [userDonations, setUserDonations] = useState<DonationData[]>([]);
-      const [selectedDonationId, setSelectedDonationId] = useState<string | null>(null);
       const [selectedDonationStatus, setSelectedDonationStatus] = useState<string | null>(null);
-
-
       
 
       const handleDonateClick = () => {

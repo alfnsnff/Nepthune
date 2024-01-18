@@ -3,7 +3,7 @@
 import { Items } from '@/types/items';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { db } from '@/lib/firebase-config';
+import { auth, db } from '@/lib/firebase-config';
 import { addDoc, collection, getDocs, query, where} from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
@@ -22,6 +22,12 @@ const SingleCard = ({ items }: { items: Items }) => {
 
         if (currentUserID === items.userId) {
           setBtnTakeLabel('Your Donation');
+          console.log("userID: " + items.userId)
+          return;
+        }
+
+        if (!auth.currentUser) {
+          setBtnTakeLabel('Take');
           console.log("userID: " + items.userId)
           return;
         }
@@ -185,11 +191,11 @@ const SingleCard = ({ items }: { items: Items }) => {
               </g>
             </svg>
           </p>
-          <p className="md:text-base text-[8px]">{category}</p>
+          <p className="md:text-base text-[8px]" style={{ textTransform: 'capitalize' }}>{category}</p>
         </div>
         <div className="md:flex hidden flex-col items-start">
-          <h1 className="text-gray-800 text-center mt-1" style={{ textTransform: 'capitalize' }}>
-            {title}
+          <h1 className="text-gray-800 text-center mt-1">
+            {title && title.charAt(0).toUpperCase() + title.slice(1)}
           </h1>
           <p className="text-gray-400  text-xs text-center">{province}</p>
           <p className="text-gray-400  text-xs text-center">{district}</p>
@@ -199,18 +205,25 @@ const SingleCard = ({ items }: { items: Items }) => {
         <div className="md:inline-flex hidden items-center mt-2">
           <div className="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover:bg-gray-100 inline-flex items-center px-4 py-1 select-none">Available {total} </div>{' '}
         </div>
-        <Link href={btnLink} className="py-2 md:px-4 px-2 md:text-base text-xs  bg-[#49adaeff] text-white rounded hover:bg-black active:bg-black disabled:opacity-50 md:mt-4 mt-1 w-full flex items-center justify-center">
+        <Link href={btnLink} className="py-2 md:px-4 px-2 md:text-base text-xs  bg-[#49adaeff] text-white rounded hover:opacity-70 active:bg-black disabled:opacity-50 md:mt-4 mt-1 w-full flex items-center justify-center">
           {' '}
           {btn}{' '}
-        </Link>
+        </Link> 
         <button
-        type="button"
-        onClick={handleTakeButtonClick}
-        className={`py-2 md:px-4 px-2 md:text-base text-xs w-full flex items-center justify-center rounded ${btnTakeLabel === 'Your Donation' ? 'bg-gray-500 text-white cursor-not-allowed' : (btnTakeLabel === 'Accepted' ? 'bg-green-500 text-white hover:bg-green-600 active:bg-green-700' : (btnTakeLabel === 'Rejected' ? 'bg-red-500 text-white hover:bg-red-600 active:bg-red-700' : 'bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50'))} md:mt-4 mt-1`}
-        disabled={btnTakeLabel === 'Your Donation'}
-      >
-        {btnTakeLabel}
-      </button>
+          type="button"
+          onClick={handleTakeButtonClick}
+          className={`py-2 md:px-4 px-2 md:text-base text-xs w-full flex items-center justify-center rounded ${
+            btnTakeLabel === 'Your Donation'
+              ? 'bg-gray-500 text-white cursor-not-allowed'
+              : btnTakeLabel === 'Accepted'
+              ? 'bg-green-500 text-white hover:bg-green-600 active:bg-green-700'
+              : btnTakeLabel === 'Rejected'
+              ? 'bg-red-500 text-white hover:bg-red-600 active:bg-red-700'
+              : 'bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50'
+          } md:mt-4 mt-1`}
+          disabled={btnTakeLabel === 'Your Donation' || !auth.currentUser}>
+          {btnTakeLabel}
+        </button>
       </div>
     </div>
   );

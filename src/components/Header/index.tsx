@@ -126,7 +126,7 @@ const Header = () => {
                             </Link>
                           )}
                         </li>
-                      ) : // Bagian yang dihapus
+                      ) : 
                       null
                     )}
                   </ul>

@@ -28,8 +28,8 @@ const menuData: Menu[] = [
   {
 
     id: 6,
-    title: "Donations",
-    path: "/donations",
+    title: "Donate",
+    path: "/donate",
     newTab: false,
   },
   {
