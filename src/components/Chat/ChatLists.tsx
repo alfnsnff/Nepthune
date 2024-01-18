@@ -22,7 +22,6 @@ interface Chat {
     };
   };
 }
-// ... (imports)
 
 const ChatLists: React.FC = () => {
   const [chats, setChats] = useState<Chat | null>(null);
@@ -54,7 +53,7 @@ const ChatLists: React.FC = () => {
         ?.sort((a, b) => (b[1]?.date as any) - (a[1]?.date as any))
         .map((chat) => (
           <div
-            className="flex items-center border-b p-2 gap-2.5 bg-white border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+            className="flex overflow-y-auto no-scrollbar items-center border-b p-2 gap-2.5 bg-white border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
             key={chat[0]}
             onClick={() => handleSelect(chat[1]?.userInfo)}
           >
