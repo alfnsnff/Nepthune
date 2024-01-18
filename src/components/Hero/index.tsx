@@ -126,8 +126,8 @@
                         </g>
                         </g>
                       </svg>
-                      <Image src="/Images/donation.svg" alt="Rotated SVG" width={20} height={20} />
-                      <Image src="/Images/community.svg" alt="Rotated SVG" width={20} height={20} />
+                      <Image src={`/images/donation.svg`} alt="Rotated SVG" width={20} height={20} />
+                      <Image src={`/images/community.svg`} alt="Rotated SVG" width={20} height={20} />
                     </span>
                   </div>
                   <ul className="mb-10 flex flex-wrap items-center justify-center gap-5">
