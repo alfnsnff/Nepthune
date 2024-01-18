@@ -82,17 +82,17 @@ const Header = () => {
                 <button onClick={navbarToggleHandler} id="navbarToggler" aria-label="Mobile Menu" className="absolute right-4 top-1/2 block -translate-y-1/2 rounded-lg px-3 py-[6px] ring-primary focus:ring-2 lg:hidden">
                   <span
                     className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${navbarOpen ? ' top-[7px] rotate-45' : ' '} ${pathUrl !== '/' && ' dark:!bg-black'} ${
-                      pathUrl === '/' && sticky ? 'bg-dark dark:bg-white' : 'bg-black'
+                      pathUrl === '/' && sticky ? 'bg-black dark:bg-white' : 'bg-black'
                     }`}
                   />
                   <span
                     className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${navbarOpen ? 'opacity-0 ' : ' '} ${pathUrl !== '/' && ' dark:!bg-black'} ${
-                      pathUrl === '/' && sticky ? 'bg-dark dark:bg-white' : 'bg-black'
+                      pathUrl === '/' && sticky ? 'bg-black dark:bg-white' : 'bg-black'
                     }`}
                   />
                   <span
                     className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${navbarOpen ? ' top-[-8px] -rotate-45' : ' '} ${pathUrl !== '/' && ' dark:!bg-black'} ${
-                      pathUrl === '/' && sticky ? 'bg-dark dark:bg-white' : 'bg-black'
+                      pathUrl === '/' && sticky ? 'bg-black dark:bg-white' : 'bg-black'
                     }`}
                   />
                 </button>
@@ -126,13 +126,13 @@ const Header = () => {
                             </Link>
                           )}
                         </li>
-                      ) : // Bagian yang dihapus
+                      ) : 
                       null
                     )}
                   </ul>
                 </nav>
               </div>
-              <div className="hidden items-center justify-end pr-16 sm:flex lg:pr-0">
+              <div className=" items-center justify-end pr-16 flex lg:pr-0">
                 {user ? (
                   <>
                     <p className={`loginBtn px-7 py-3 text-base font-medium ${!sticky && pathUrl === '/' ? 'text-dark' : 'text-dark'}`}>{auth.currentUser?.displayName}</p>
@@ -143,7 +143,7 @@ const Header = () => {
                     ) : (
                       <button
                         onClick={handleLogout}
-                        className="signUpBtn rounded-lg hover:bg-[#49adaeff]/90 hover:opacity-70 bg-[#49adaeff] dark:hover:bg-white/20 bg-opacity-20 px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark"
+                        className="signUpBtn rounded-lg sm:flex hidden  hover:bg-[#49adaeff]/90 hover:opacity-70 bg-[#49adaeff] dark:hover:bg-white/20 bg-opacity-20 md:px-6 px-2 py-3 md:text-base text-[10px] font-medium text-white duration-300 ease-in-out hover:bg-opacity-100 "
                       >
                         Sign Out
                       </button>
@@ -155,19 +155,19 @@ const Header = () => {
                       <>
                         {pathUrl !== '/' ? (
                           <>
-                            <Link href="/auth/signin" className="px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white">
+                            <Link href="/auth/signin" className="px-7 py-3 text-sm sm:text-base font-medium text-dark hover:opacity-70 dark:text-white">
                               Sign In
                             </Link>
-                            <Link href="/auth/signup" className="rounded-lg bg-primary px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-primary/90 dark:bg-white/10 dark:hover:bg-white/20">
+                            <Link href="/auth/signup" className="rounded-lg bg-primary px-6 py-3 text-sm sm:text-base font-medium text-white duration-300 ease-in-out hover:bg-primary/90 dark:bg-white/10 dark:hover:bg-white/20">
                               Sign Up
                             </Link>
                           </>
                         ) : (
                           <>
-                            <Link href="/auth/signin" className="px-7 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white">
+                            <Link href="/auth/signin" className="px-7 py-3 text-sm sm:text-base font-medium text-dark hover:opacity-70 dark:text-white">
                               Sign In
                             </Link>
-                            <Link href="/auth/signup" className="rounded-lg bg-primary px-6 py-3 text-base font-medium text-white duration-300 ease-in-out hover:bg-primary/90 dark:bg-white/10 dark:hover:bg-white/20">
+                            <Link href="/auth/signup" className="rounded-lg bg-primary px-6 py-3 text-sm sm:text-base font-medium text-white duration-300 ease-in-out hover:bg-primary/90 dark:bg-white/10 dark:hover:bg-white/20">
                               Sign Up
                             </Link>
                           </>
